@@ -1,4 +1,4 @@
-import os, sys
+import os
 
 def recurse_dir(dir:str = './'):
     count = 0

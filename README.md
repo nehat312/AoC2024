@@ -15,3 +15,5 @@ These are my solutions for the [Advent of Code 2024](https://adventofcode.com/20
 [ ] Automate file importing / Data loading into one support file
 [ ] Restructure main.py for each day to run. 
 [ ] No more uploading the text files you moob.
+[ ] Make a function to pull down the sample data - requests
+[ ] 

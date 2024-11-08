@@ -12,7 +12,7 @@ from rich.logging import RichHandler
 ################################# Date/Load/Save Funcs ####################################
 
 
-#############################  Data Transform Funcs for Sasquatch App ############################
+#############################  Data Transform Funcs  ############################
 def date_convert(str_time:str)->datetime:
     """When Loading the historical data.  Turn all the published dates into datetime objects so they can be sorted in the save routine. 
 

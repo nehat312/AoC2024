@@ -4,8 +4,10 @@ root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__
 sys.path.append(root_folder)
 from utils.time_run import log_time
 from utils.loc import recurse_dir
+from utils import support
 from pathlib import Path, PurePath
 from rich.console import Console
+from datetime import datetime
 
 
 def data_load(DAY:str, filen:str)->list:
@@ -25,16 +27,16 @@ def part_B(DAY):
 
 def main():
     DAY = './day1/'
-    log_path = PurePath(Path.cwd(), Path(f"./{DAY}/logs/{current_date}.log"))
-    fp = PurePath(Path.cwd(), Path(f"./data/json/{current_date}.json"))
+    current_date = datetime.now().strftime("%m-%d-%YT%H:%M:%S")
+    log_path = PurePath(Path.cwd(), Path(f"./{DAY}/{current_date}.log"))
+    fp = PurePath(Path.cwd(), Path(f"./data/{DAY}/day.txt"))
     #Logger setup
     global logger, console
     console = Console()
     logger = support.get_logger(log_path, console)		
-
-    print(f"Part A solution: \n{part_A()}\n")
-    print(f"Part B solution: \n{part_B()}\n")
-    print(f"Lines of code \n{recurse_dir(DAY)}")
+    logger.info(f"Part A solution: \n{part_A(DAY)}\n")
+    logger.info(f"Part B solution: \n{part_B(DAY)}\n")
+    logger.info(f"Lines of code \n{recurse_dir(DAY)}")
 
 if __name__ == "__main__":
     main()
