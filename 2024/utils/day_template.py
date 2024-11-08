@@ -17,13 +17,13 @@ def data_load(DAY:str, filen:str)->list:
     return arr
 
 @log_time
-def part_A(DAY):
-    data = data_load(DAY)
+def part_A(fp:str):
+    data = data_load(fp)
 
 
 @log_time
-def part_B(DAY):
-    data = data_load(DAY)
+def part_B(fp:str):
+    data = data_load(fp)
 
 def main():
     DAY = './day1/'
