@@ -9,9 +9,33 @@ from rich.console import Console
 from dataclasses import dataclass
 from rich.logging import RichHandler
 
-################################# Date/Load/Save Funcs ####################################
+################################# Timing Funcs ####################################
+def log_time(fn):
+	def inner(*args, **kwargs):
+		tnow = time.time()
+		out = fn(*args, **kwargs)
+		te = time.time()
+		took = te - tnow
+		
+		if took <= .000_001:
+			logging.info(f"{fn.__name__} ran in {took*1_000_000_000:.3f} ns")
+		elif took <= .001:
+			logging.info(f"{fn.__name__} ran in {took*1_000_000:.3f} μs")
+		elif took <= 1:
+			logging.info(f"{fn.__name__} ran in {took*1_000:.3f} ms")
+		elif took <= 60:
+			logging.info(f"{fn.__name__} ran in {took:.2f} s")
+		elif took <= 3600:
+			logging.info(f"{fn.__name__} ran in {(took)/60:.2f} m")		
+		else:
+			logging.info(f"{fn.__name__} ran in {(took)/3600:.2f} h")
+		return out
+	return inner
 
-
+################################# Pull test data func ####################################
+def pull_test_data():
+    pass
+    #TODO - Write a loader
 #############################  Data Transform Funcs  ############################
 def date_convert(str_time:str)->datetime:
     """When Loading the historical data.  Turn all the published dates into datetime objects so they can be sorted in the save routine. 
