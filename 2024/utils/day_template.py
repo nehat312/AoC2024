@@ -9,7 +9,9 @@ from datetime import datetime
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)
 
+@log_time
 def data_load(fp:str)->list:
+    #TODO.  Make sure you have the right file path
     with open(f'{fp}.txt', 'r') as f:
         data = f.read().splitlines()
         arr = [x.strip() if x != "" else "" for x in data]
@@ -18,10 +20,12 @@ def data_load(fp:str)->list:
 @log_time
 def part_A(fp:str):
     data = data_load(fp)
+    logger.info("data loaded")
 
 @log_time
 def part_B(fp:str):
     data = data_load(fp)
+    logger.info("data loaded")
 
 def main():
     #Set day variable
