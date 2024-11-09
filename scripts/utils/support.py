@@ -10,11 +10,6 @@ import requests
 from functools import cache
 from bs4 import BeautifulSoup
 
-# Run once, store text in memory
-#Excellent example
-#https://github.com/anze3db/adventofcode2022/blob/32305b112388db64bcd6dd7e91ab2f8b8760b494/utils.py#L20
-
-
 ################################# data pulling funcs ##############################
 @cache
 def pull_puzzle(day:int, year:int, part:int, logger:logging):

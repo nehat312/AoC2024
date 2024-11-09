@@ -1,6 +1,8 @@
 ## 🎄 Advent of Code 2024 🎄
 
-These are my solutions for the [Advent of Code 2024](https://adventofcode.com/2024) challenges.
+These are my solutions for the [Advent of Code 2024](https://adventofcode.com/2024) challenges. Huge thanks to [anze3db](https://github.com/anze3db) for his 
+excellent framework borrowe alot of code from in the efforts to create a more
+streamlined AOC experience for myself.
 
 ### 🎄 Results 🎄
 
@@ -15,5 +17,5 @@ These are my solutions for the [Advent of Code 2024](https://adventofcode.com/20
 - [x] Restructure main.py for each day to run. 
 - [x] No more uploading the text files you moob.
 - [x] Make a function to pull down the sample data - requests
-- [ ] Credit anze3db for utils updates.
+- [x] Credit anze3db for utils updates.
 - [ ] Something that captures the output and updates the README? SORCERY
