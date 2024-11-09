@@ -18,7 +18,7 @@ def process_input(textdata:str, split:bool=True)->list:
 
 @log_time
 def part_A(DAY:int, YEAR:int):
-    console.log(f"\n{support.pull_puzzle(DAY, YEAR, 1, logger)}")
+    console.log(f"\n\n{support.pull_puzzle(DAY, YEAR, 1, logger)}")
     input = support.pull_inputdata(DAY, YEAR, logger)
     data = process_input(input) #Include False to not split
     logger.info("Test data processed/loaded")
@@ -27,13 +27,13 @@ def part_A(DAY:int, YEAR:int):
 @log_time
 def part_B(DAY:int, YEAR:int, test_data):
     #Solve part B
-    console.log(f"\n{support.pull_puzzle(DAY, YEAR, 2, logger)}")
+    console.log(f"\n\n{support.pull_puzzle(DAY, YEAR, 2, logger)}")
     data = test_data
     logger.info("test data processed/loaded")
 
 def main():
     #Set day variable
-    DAY = 1
+    DAY = 1 #datetime.now().day
     YEAR = 2023 #datetime.now().year
     
     #Solve part A

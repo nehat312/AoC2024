@@ -48,6 +48,7 @@ def pull_inputdata(day:int, year:int, logger:logging)->str:
 
 
 ################################# submit funcs ####################################
+#TODO - Build these, but go hang out with your fiancee for a while
 
 ################################# Timing Funcs ####################################
 def log_time(fn):
