@@ -38,7 +38,8 @@ def main():
     logger.info(f"Part B solution: \n{resultB}\n")
     
     #Recurse lines of code
-    logger.info(f"Lines of code \n{support.recurse_dir(f'./scripts/day{DAY}/')}")
+    LOC = support.recurse_dir(f'./scripts/day{DAY}/')
+    logger.info(f"Lines of code \n{LOC}")
 
 if __name__ == "__main__":
     main()
