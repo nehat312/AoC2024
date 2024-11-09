@@ -1,5 +1,5 @@
 import time
-import json
+import os
 import logging
 import datetime
 import numpy as np
@@ -8,6 +8,16 @@ from os.path import exists
 from rich.console import Console
 from dataclasses import dataclass
 from rich.logging import RichHandler
+
+#TODO - Need scraper for part A and part B data.
+# Run once, store locally, hide in gitignore
+# https://github.com/anze3db/adventofcode2022/blob/32305b112388db64bcd6dd7e91ab2f8b8760b494/utils.py#L20
+
+console = Console()
+AOC_URL = "https://www.adventofcode.com"
+AOC_SESSIONS = os.getenv("AOC_SESSION")
+
+
 
 ################################# Timing Funcs ####################################
 def log_time(fn):
@@ -31,6 +41,28 @@ def log_time(fn):
 			logging.info(f"{fn.__name__} ran in {(took)/3600:.2f} h")
 		return out
 	return inner
+
+################################# Code Line Counter ####################################
+def recurse_dir(dir:str = './'):
+    """Given the particular days directory, Recurse through and calculate how many lines of code that are uncommented were written for every py file found.
+
+    Args:
+        dir (str, optional): Directory you want to search. Defaults to './'.
+
+    Returns:
+        count (int): Lines of code counted in directory
+    """    
+    count = 0
+    for file in os.listdir(dir):
+        if not os.path.isfile(dir + file):
+            count += recurse_dir(dir + file + '/')
+        elif file.endswith('.py'):
+            with open(dir + file, 'r') as f:
+                for line in f.read().split('\n'):
+                    if (not line.strip().startswith('#')) and (not line.strip() == ''):
+                        count += 1
+
+    return count
 
 ################################# Pull test data func ####################################
 def pull_test_data():
