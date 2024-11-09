@@ -17,4 +17,5 @@ excellent AOC framework. I borrowed alot of code his code in efforts to create a
 - [x] No more uploading the text files you moob.
 - [x] Make a function to pull down the sample data - requests
 - [x] Credit anze3db for utils updates.
+- [ ] Build function that stores the input puzzle data locally in a text file. 
 - [ ] Something that captures the output and updates the README? SORCERY

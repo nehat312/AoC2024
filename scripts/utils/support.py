@@ -33,7 +33,7 @@ def pull_puzzle(day:int, year:int, part:int, logger:logging):
     bs4ob = BeautifulSoup(response.text, features="xml")
     storytime = bs4ob.find_all("article")[part - 1].get_text()
     sampledata = bs4ob.find_all("code")[part - 1].get_text()
-    
+
     return storytime, sampledata
 
 @cache
@@ -52,6 +52,10 @@ def pull_inputdata(day:int, year:int, logger:logging)->str:
         logger.info(f"day {day} data retrieved")
         return response.text
 
+#TODO - Build function that stores the input data locally in a text file. 
+#Hidden in the gitignore, but, have it contain logic that if its
+#already downloaded either the puzzle / or input.  To not redownload them
+#so as to not hammer Eric's servers.  
 
 ################################# submit funcs ####################################
 #TODO - Build these, but go hang out with your fiancee for a while
