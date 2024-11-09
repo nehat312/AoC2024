@@ -108,6 +108,15 @@ def recurse_dir(dir:str = './'):
     return count
 
 #############################  Data Transform Funcs  ############################
+def process_input(textdata:str, split:bool=True)->list:
+    if split:
+        data = textdata.splitlines()
+        arr = [x.strip() if x != "" else "" for x in data]
+    else:
+        arr = [x.strip() if x != "" else "" for x in textdata]
+    return arr
+
+
 def date_convert(str_time:str)->datetime:
     """When Loading the historical data.  Turn all the published dates into datetime objects so they can be sorted in the save routine. 
 
