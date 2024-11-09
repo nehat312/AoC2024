@@ -1,8 +1,7 @@
 ## 🎄 Advent of Code 2024 🎄
 
 These are my solutions for the [Advent of Code 2024](https://adventofcode.com/2024) challenges. Huge thanks to [anze3db](https://github.com/anze3db) for his 
-excellent framework borrowe alot of code from in the efforts to create a more
-streamlined AOC experience for myself.
+excellent AOC framework. I borrowed alot of code his code in efforts to create a more streamlined AOC experience for myself.  Thank you!
 
 ### 🎄 Results 🎄
 
