@@ -9,6 +9,10 @@ from rich.logging import RichHandler
 import requests
 from functools import cache
 from bs4 import BeautifulSoup
+################################# Global Vars ##############################
+AOC_URL = "https://www.adventofcode.com"
+with open("./secret/cookie.txt", "r") as f:
+    C_is_for_cookie = {"session":f.readline()}
 
 ################################# data pulling funcs ##############################
 @cache
@@ -155,10 +159,8 @@ def get_logger(console:Console)->logging.Logger: #log_dir:Path,
     logger.propagate = False
     return logger
 
-
-AOC_URL = "https://www.adventofcode.com"
-with open("./secret/cookie.txt", "r") as f:
-    C_is_for_cookie = {"session":f.readline()}
+################################# Global Vars (Part duex) ##############################
+#Still don't know why I can't load the logger function up above
 console = Console()
 logger = get_logger(console)
 
