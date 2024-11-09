@@ -4,9 +4,7 @@ import logging
 import datetime
 import numpy as np
 from pathlib import Path
-from os.path import exists
 from rich.console import Console
-from dataclasses import dataclass
 from rich.logging import RichHandler
 import requests
 from functools import cache
@@ -16,49 +14,43 @@ from bs4 import BeautifulSoup
 #Excellent example
 #https://github.com/anze3db/adventofcode2022/blob/32305b112388db64bcd6dd7e91ab2f8b8760b494/utils.py#L20
 
-console = Console()
-AOC_URL = "https://www.adventofcode.com"
-with open("./secret/cookie.txt", "r") as f:
-    C_is_for_cookie = {"session":f.readline()}
 
 ################################# data pulling funcs ##############################
 @cache
-def pull_puzzle(day:int, year:int, part:int):
-    logging.info("pulling puzzle data")
+def pull_puzzle(day:int, year:int, part:int, logger:logging):
+    logger.info("pulling puzzle data")
     url = f"{AOC_URL}/{year}/day/{day}"
     response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
     
     #Just in case we piss someone off
     if response.status_code != 200:
         # If there's an error, log it and return no data
-        logging.warning(f'Status code: {response.status_code}')
-        logging.warning(f'Reason: {response.reason}')
+        logger.warning(f'Status code: {response.status_code}')
+        logger.warning(f'Reason: {response.reason}')
         return None
     else:
-        logging.info(f"day {day} data retrieved")
+        logger.info(f"day {day} data retrieved")
 
     bs4ob = BeautifulSoup(response.text, features="xml")
 
     return bs4ob.find_all("article")[part - 1].get_text()
 
 @cache
-def pull_inputdata(day:int, year:int, part:str, split:bool=False):
-    logging.info("pulling input data")
+def pull_inputdata(day:int, year:int, logger:logging)->str:
+    logger.info("pulling input data")
     url = f"{AOC_URL}/{year}/day/{day}/input"
     response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
     
     #Just in case we piss someone off
     if response.status_code != 200:
         # If there's an error, log it and return no data
-        logging.warning(f'Status code: {response.status_code}')
-        logging.warning(f'Reason: {response.reason}')
+        logger.warning(f'Status code: {response.status_code}')
+        logger.warning(f'Reason: {response.reason}')
         return None
     else:
-        logging.info(f"day {day} data retrieved")
+        logger.info(f"day {day} data retrieved")
+        return response.text
 
-    bs4ob = BeautifulSoup(response.text, features="xml")
-
-    return bs4ob.find_all("article")[part - 1].get_text()
 
 ################################# submit funcs ####################################
 
@@ -70,17 +62,17 @@ def log_time(fn):
         te = time.time()
         took = te - tnow
         if took <= .000_001:
-            logging.info(f"{fn.__name__} ran in {took*1_000_000_000:.3f} ns")
+            logger.info(f"{fn.__name__} ran in {took*1_000_000_000:.3f} ns")
         elif took <= .001:
-            logging.info(f"{fn.__name__} ran in {took*1_000_000:.3f} μs")
+            logger.info(f"{fn.__name__} ran in {took*1_000_000:.3f} μs")
         elif took <= 1:
-            logging.info(f"{fn.__name__} ran in {took*1_000:.3f} ms")
+            logger.info(f"{fn.__name__} ran in {took*1_000:.3f} ms")
         elif took <= 60:
-            logging.info(f"{fn.__name__} ran in {took:.2f} s")
+            logger.info(f"{fn.__name__} ran in {took:.2f} s")
         elif took <= 3600:
-            logging.info(f"{fn.__name__} ran in {(took)/60:.2f} m")		
+            logger.info(f"{fn.__name__} ran in {(took)/60:.2f} m")		
         else:
-            logging.info(f"{fn.__name__} ran in {(took)/3600:.2f} h")
+            logger.info(f"{fn.__name__} ran in {(took)/3600:.2f} h")
         return out
     return inner
 
@@ -100,16 +92,12 @@ def recurse_dir(dir:str = './'):
             count += recurse_dir(dir + file + '/')
         elif file.endswith('.py'):
             with open(dir + file, 'r') as f:
-                for line in f.read().split('\n'):
+                for line in f.readlines():
                     if (not line.strip().startswith('#')) and (not line.strip() == ''):
                         count += 1
 
     return count
 
-################################# Pull test data func ####################################
-def pull_test_data():
-    pass
-    #TODO - Write a loader
 #############################  Data Transform Funcs  ############################
 def date_convert(str_time:str)->datetime:
     """When Loading the historical data.  Turn all the published dates into datetime objects so they can be sorted in the save routine. 
@@ -154,7 +142,7 @@ def get_rich_handler(console:Console) -> RichHandler:
     rh.setFormatter(logging.Formatter(FORMAT_RICH))
     return rh
 
-def get_logger(log_dir:Path, console:Console)->logging.Logger:
+def get_logger(console:Console)->logging.Logger: #log_dir:Path, 
     """Loads logger instance.  When given a path and access to the terminal output.  The logger will save a log of all records, as well as print it out to your terminal. Propogate set to False assigns all captured log messages to both handlers.
 
     Args:
@@ -170,4 +158,11 @@ def get_logger(log_dir:Path, console:Console)->logging.Logger:
     logger.addHandler(get_rich_handler(console))  
     logger.propagate = False
     return logger
+
+
+AOC_URL = "https://www.adventofcode.com"
+with open("./secret/cookie.txt", "r") as f:
+    C_is_for_cookie = {"session":f.readline()}
+console = Console()
+logger = get_logger(console)
 
