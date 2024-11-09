@@ -57,7 +57,8 @@ def pull_inputdata(day:int, year:int, logger:logging)->str:
 #TODO - Build function that stores the input data locally in a text file. 
 #Hidden in the gitignore, but, have it contain logic that if its
 #already downloaded either the puzzle / or input.  To not redownload them
-#so as to not hammer Eric's servers.  
+#so as to not hammer Eric's servers.  Wait.  Wouldn't this already be stored
+# in your cache? I think that means you'd only pull it once but check
 
 ################################# submit funcs ####################################
 #TODO - Build these, but go hang out with your fiancee for a while
