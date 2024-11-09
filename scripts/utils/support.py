@@ -31,8 +31,10 @@ def pull_puzzle(day:int, year:int, part:int, logger:logging):
         logger.info(f"day {day} data retrieved")
 
     bs4ob = BeautifulSoup(response.text, features="xml")
-
-    return bs4ob.find_all("article")[part - 1].get_text()
+    storytime = bs4ob.find_all("article")[part - 1].get_text()
+    sampledata = bs4ob.find_all("code")[part - 1].get_text()
+    
+    return storytime, sampledata
 
 @cache
 def pull_inputdata(day:int, year:int, logger:logging)->str:
