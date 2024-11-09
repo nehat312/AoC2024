@@ -17,3 +17,4 @@ These are my solutions for the [Advent of Code 2024](https://adventofcode.com/20
 - [ ] Restructure main.py for each day to run. 
 - [ ] No more uploading the text files you moob.
 - [ ] Make a function to pull down the sample data - requests
+- [ ] Something that captures the output and updates the README? SORCERY

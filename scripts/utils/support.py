@@ -15,9 +15,9 @@ from rich.logging import RichHandler
 
 console = Console()
 AOC_URL = "https://www.adventofcode.com"
-AOC_SESSIONS = os.getenv("AOC_SESSION")
 
-
+with open("./secret/cookie.txt", "r") as f:
+    AOC_SESSION = f.readline()
 
 ################################# Timing Funcs ####################################
 def log_time(fn):
@@ -26,7 +26,6 @@ def log_time(fn):
 		out = fn(*args, **kwargs)
 		te = time.time()
 		took = te - tnow
-		
 		if took <= .000_001:
 			logging.info(f"{fn.__name__} ran in {took*1_000_000_000:.3f} ns")
 		elif took <= .001:

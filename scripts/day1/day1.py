@@ -3,12 +3,9 @@ import sys
 #Add the dir above day run as path for easy import
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)
-
-from utils.support import log_time, console
-from utils.loc import recurse_dir
+from utils.support import log_time, recurse_dir, console
 from utils import support
 from pathlib import Path, PurePath
-from rich.console import Console
 from datetime import datetime
 
 
@@ -45,7 +42,6 @@ def main():
     resultB = part_B(fp)
     logger.info(f"Part B solution: \n{resultB}\n")
     logger.info(f"Lines of code \n{recurse_dir(f'./scripts/day{DAY}')}")
-
 
 
 if __name__ == "__main__":
