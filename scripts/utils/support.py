@@ -8,38 +8,81 @@ from os.path import exists
 from rich.console import Console
 from dataclasses import dataclass
 from rich.logging import RichHandler
+import requests
+from functools import cache
+from bs4 import BeautifulSoup
 
-#TODO - Need scraper for part A and part B data.
-# Run once, store locally, hide in gitignore
-# https://github.com/anze3db/adventofcode2022/blob/32305b112388db64bcd6dd7e91ab2f8b8760b494/utils.py#L20
+# Run once, store text in memory
+#Excellent example
+#https://github.com/anze3db/adventofcode2022/blob/32305b112388db64bcd6dd7e91ab2f8b8760b494/utils.py#L20
 
 console = Console()
 AOC_URL = "https://www.adventofcode.com"
-
 with open("./secret/cookie.txt", "r") as f:
-    AOC_SESSION = f.readline()
+    C_is_for_cookie = {"session":f.readline()}
+
+################################# data pulling funcs ##############################
+@cache
+def pull_puzzle(day:int, year:int, part:int):
+    logging.info("pulling puzzle data")
+    url = f"{AOC_URL}/{year}/day/{day}"
+    response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
+    
+    #Just in case we piss someone off
+    if response.status_code != 200:
+        # If there's an error, log it and return no data
+        logging.warning(f'Status code: {response.status_code}')
+        logging.warning(f'Reason: {response.reason}')
+        return None
+    else:
+        logging.info(f"day {day} data retrieved")
+
+    bs4ob = BeautifulSoup(response.text, features="xml")
+
+    return bs4ob.find_all("article")[part - 1].get_text()
+
+@cache
+def pull_inputdata(day:int, year:int, part:str, split:bool=False):
+    logging.info("pulling input data")
+    url = f"{AOC_URL}/{year}/day/{day}/input"
+    response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
+    
+    #Just in case we piss someone off
+    if response.status_code != 200:
+        # If there's an error, log it and return no data
+        logging.warning(f'Status code: {response.status_code}')
+        logging.warning(f'Reason: {response.reason}')
+        return None
+    else:
+        logging.info(f"day {day} data retrieved")
+
+    bs4ob = BeautifulSoup(response.text, features="xml")
+
+    return bs4ob.find_all("article")[part - 1].get_text()
+
+################################# submit funcs ####################################
 
 ################################# Timing Funcs ####################################
 def log_time(fn):
-	def inner(*args, **kwargs):
-		tnow = time.time()
-		out = fn(*args, **kwargs)
-		te = time.time()
-		took = te - tnow
-		if took <= .000_001:
-			logging.info(f"{fn.__name__} ran in {took*1_000_000_000:.3f} ns")
-		elif took <= .001:
-			logging.info(f"{fn.__name__} ran in {took*1_000_000:.3f} μs")
-		elif took <= 1:
-			logging.info(f"{fn.__name__} ran in {took*1_000:.3f} ms")
-		elif took <= 60:
-			logging.info(f"{fn.__name__} ran in {took:.2f} s")
-		elif took <= 3600:
-			logging.info(f"{fn.__name__} ran in {(took)/60:.2f} m")		
-		else:
-			logging.info(f"{fn.__name__} ran in {(took)/3600:.2f} h")
-		return out
-	return inner
+    def inner(*args, **kwargs):
+        tnow = time.time()
+        out = fn(*args, **kwargs)
+        te = time.time()
+        took = te - tnow
+        if took <= .000_001:
+            logging.info(f"{fn.__name__} ran in {took*1_000_000_000:.3f} ns")
+        elif took <= .001:
+            logging.info(f"{fn.__name__} ran in {took*1_000_000:.3f} μs")
+        elif took <= 1:
+            logging.info(f"{fn.__name__} ran in {took*1_000:.3f} ms")
+        elif took <= 60:
+            logging.info(f"{fn.__name__} ran in {took:.2f} s")
+        elif took <= 3600:
+            logging.info(f"{fn.__name__} ran in {(took)/60:.2f} m")		
+        else:
+            logging.info(f"{fn.__name__} ran in {(took)/3600:.2f} h")
+        return out
+    return inner
 
 ################################# Code Line Counter ####################################
 def recurse_dir(dir:str = './'):

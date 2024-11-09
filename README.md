@@ -1,10 +1,8 @@
-# 🎄 Advent of Code 2024 🎄
-
-## 🎄 Summary 🎄
+## 🎄 Advent of Code 2024 🎄
 
 These are my solutions for the [Advent of Code 2024](https://adventofcode.com/2024) challenges.
 
-## 🎄 Results 🎄
+### 🎄 Results 🎄
 
 | Day | Stars | Solution | Name                                                             | Speed Part A | Speed Part B | LOC |
 | --- | ----- | ---- | ---------------------------------------------------------------- | ----- | ----- | --- | 
@@ -17,4 +15,5 @@ These are my solutions for the [Advent of Code 2024](https://adventofcode.com/20
 - [ ] Restructure main.py for each day to run. 
 - [ ] No more uploading the text files you moob.
 - [ ] Make a function to pull down the sample data - requests
-- [ ] Credit anze3db for utils updates.- [ ] Something that captures the output and updates the README? SORCERY
+- [ ] Credit anze3db for utils updates.
+- [ ] Something that captures the output and updates the README? SORCERY
