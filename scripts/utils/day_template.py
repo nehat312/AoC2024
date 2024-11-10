@@ -44,7 +44,6 @@ def part_B():
     console.log(f"\n{puzzletext}")
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
-
     
     #Call solution functions for testcase
     testcase = "duh"
@@ -66,6 +65,7 @@ def main():
     LOC = support.recurse_dir(f'./scripts/day{DAY}/')
     logger.info(f"Lines of code \n{LOC}")
 
+    #Delete the cache after submission
     support._877_cache_now(".cache", True)
     
 if __name__ == "__main__":
