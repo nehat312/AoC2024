@@ -10,6 +10,7 @@ import requests
 import percache
 from datetime import timedelta
 from bs4 import BeautifulSoup
+from typing import Any
 
 ################################ Global Vars ##############################
 AOC_URL = "https://www.adventofcode.com"
@@ -81,7 +82,30 @@ def pull_inputdata(day:int, year:int, logger:logging)->str:
         return response.text
 
 ################################# submit funcs ####################################
-#TODO - Build these, but go hang out with your fiancee for a while
+@cache
+def submit_answer(day:int, year:int, part:int, logger:logging, answer:Any=""):
+    if not answer:
+        logger.warning("No Soup for you!!!! No answer submitted")
+        return 
+    
+    logger.info(f"Posting {answer} for part {part}")
+    url = f"{AOC_URL}/{year}/day/{day}/answer"
+    response = requests.post(
+        url = url,
+        data = {"level":part, "answer":answer},
+        cookies = C_is_for_cookie, 
+        timeout = 10
+    )
+    #Be nice to the servers
+    if response.status_code != 200:
+        # If there's an error, log it and return no data
+        logger.warning(f'Status code: {response.status_code}')
+        logger.warning(f'Reason: {response.text}')
+        return None
+    else:
+        logger.info(f"AOC day {day} successfully submitted :tada:")
+        bs4ob = BeautifulSoup(response.text, "xml")
+        console.log(bs4ob.find_all("article")[2].get_text())
 
 ################################# Timing Funcs ####################################
 def log_time(fn):

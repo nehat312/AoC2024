@@ -56,11 +56,13 @@ def main():
     #Solve part A
     resultA = part_A()
     logger.info(f"Part A solution: \n{resultA}\n")
-    
+    # support.submit_answer(DAY, YEAR, 1, resultA)
+
     #Solve part B
     resultB = part_B()
     logger.info(f"Part B solution: \n{resultB}\n")
-    
+    # support.submit_answer(DAY, YEAR, 2, resultB)
+
     #Recurse lines of code
     LOC = support.recurse_dir(f'./scripts/day{DAY}/')
     logger.info(f"Lines of code \n{LOC}")
