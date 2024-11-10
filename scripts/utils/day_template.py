@@ -15,8 +15,8 @@ YEAR = 2023 #datetime.now().year
 def part_A():
     logger.info("Solving part A")
     #to check your cache status and you need cache nooooow
-    #... call J.... G.... WENTWORTH. 
-    support._877_cache_now() 
+    #call J.... G.... WENTWORTH. 
+    support._877_cache_now() #Lol
     #Pull puzzle description and testdata
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1)
     #Print the puzzle description to the terminal
@@ -74,6 +74,8 @@ def main():
     #Delete the cache after submission
     support._877_cache_now(".cache", True)
     
+    #TODO - Update README function?
+
 if __name__ == "__main__":
     main()
 
