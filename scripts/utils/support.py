@@ -75,14 +75,15 @@ def _877_cache_now(
     cache_files = [f"{cache_file}.{cachetype}" for cachetype in ["bak","dat","dir"]]
     for file in cache_files:
         if os.path.exists(file):
-            logger.info(f"cache file exists-> {file}")
             if del_cache:
                 cache.close()
                 logger.warning(f"cache closed")
                 cache_closed = True
                 break
+            else:
+                logger.info(f"cache file exists-> {file}")
         else:
-            logger.info("creating cache")
+            logger.info(f"creating cache file-> {file}")
     if cache_closed:
         [os.remove(file) for file in cache_files]
         logger.critical("cache cleared")

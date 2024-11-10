@@ -51,7 +51,7 @@ def part_B():
     #Assert the testcase is correct
     assert(testcase == "duh")
     global data
-    logger.info(f"length of data {len(data)}")
+    logger.info(f"length of full dataset-> {len(data)}")
     #TODO - Call solution functions for fulldatainput
     return "duh"
 
