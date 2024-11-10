@@ -14,7 +14,8 @@ YEAR = 2023 #datetime.now().year
 @log_time
 def part_A():
     logger.info("Solving part A")
-    #Check cache status J.... G.... WENTWORTH. 
+    #to check your cache status and you need cache nooooow
+    #... call J.... G.... WENTWORTH. 
     support._877_cache_now() 
     #Pull puzzle description and testdata
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1)
@@ -58,12 +59,12 @@ def part_B():
 def main():
     #Solve part A
     resultA = part_A()
-    logger.info(f"Part A solution: \n{resultA}\n")
+    logger.info(f"part A solution: \n{resultA}\n")
     # support.submit_answer(DAY, YEAR, 1, resultA)
 
     #Solve part B
     resultB = part_B()
-    logger.info(f"Part B solution: \n{resultB}\n")
+    logger.info(f"part B solution: \n{resultB}\n")
     # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
@@ -71,7 +72,7 @@ def main():
     logger.info(f"Lines of code \n{LOC}")
 
     #Delete the cache after submission
-    support._877_cache_now(".cache", False)
+    support._877_cache_now(".cache", True)
     
 if __name__ == "__main__":
     main()
