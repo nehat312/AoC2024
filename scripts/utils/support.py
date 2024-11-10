@@ -25,12 +25,43 @@ cache.expire = timedelta(hours=1)
 #TODO.  Add an AOC class for functionality sake. 
 #Need for testing
 
-################################ data pulling funcs ########################
-def _877_cache_now(cache_file=".cache", del_cache:bool=False, cache_closed:bool=False): #Lol. I couldn't resist
+################################# Timing Funcs ##############################
+def log_time(fn):
+    """Decorator timing function.  Accepts any function and returns a logging statement with the amount of time it took to run. DJ, I use this code everywhere still.  Thank you bud!
+
+    Args:
+        fn (function): Input function you want to time
+    """	
+    def inner(*args, **kwargs):
+        tnow = time.time()
+        out = fn(*args, **kwargs)
+        te = time.time()
+        took = te - tnow
+        if took <= .000_001:
+            logger.info(f"{fn.__name__} ran in {took*1_000_000_000:.2f} ns")
+        elif took <= .001:
+            logger.info(f"{fn.__name__} ran in {took*1_000_000:.2f} μs")
+        elif took <= 1:
+            logger.info(f"{fn.__name__} ran in {took*1_000:.2f} ms")
+        elif took <= 60:
+            logger.info(f"{fn.__name__} ran in {took:.2f} s")
+        elif took <= 3600:
+            logger.info(f"{fn.__name__} ran in {(took)/60:.2f} m")		
+        else:
+            logger.info(f"{fn.__name__} ran in {(took)/3600:.2f} h")
+        return out
+    return inner
+
+################################ data pulling/cache managment funcs #########
+def _877_cache_now(
+        cache_file:str=".cache", 
+        del_cache:bool=False, 
+        cache_closed:bool=False
+    ): #Lol. I couldn't resist
     cache_files = [f"{cache_file}.{cachetype}" for cachetype in ["bak","dat","dir"]]
     for file in cache_files:
         if os.path.exists(file):
-            logger.info(f"Cache file {file} exists")
+            logger.info(f"Cache file exists")
             if del_cache:
                 cache.close()
                 cache_closed = True
@@ -78,7 +109,7 @@ def pull_inputdata(day:int, year:int, logger:logging)->str:
         logger.info(f"day {day} data retrieved")
         return response.text
 
-################################# submit funcs ####################################
+################################# submit funcs ##############################
 @cache
 def submit_answer(day:int, year:int, part:int, logger:logging, answer:Any=""):
     if not answer:
@@ -104,34 +135,9 @@ def submit_answer(day:int, year:int, part:int, logger:logging, answer:Any=""):
         bs4ob = BeautifulSoup(response.text, "xml")
         console.log(bs4ob.find_all("article")[2].get_text())
 
-################################# Timing Funcs ####################################
-def log_time(fn):
-    """Decorator timing function.  Accepts any function and returns a logging statement with the amount of time it took to run. DJ, I use this code everywhere still.  Thank you bud!
+#TODO - Will need to come back and check these
 
-    Args:
-        fn (function): Input function you want to time
-    """	
-    def inner(*args, **kwargs):
-        tnow = time.time()
-        out = fn(*args, **kwargs)
-        te = time.time()
-        took = te - tnow
-        if took <= .000_001:
-            logger.info(f"{fn.__name__} ran in {took*1_000_000_000:.2f} ns")
-        elif took <= .001:
-            logger.info(f"{fn.__name__} ran in {took*1_000_000:.2f} μs")
-        elif took <= 1:
-            logger.info(f"{fn.__name__} ran in {took*1_000:.2f} ms")
-        elif took <= 60:
-            logger.info(f"{fn.__name__} ran in {took:.2f} s")
-        elif took <= 3600:
-            logger.info(f"{fn.__name__} ran in {(took)/60:.2f} m")		
-        else:
-            logger.info(f"{fn.__name__} ran in {(took)/3600:.2f} h")
-        return out
-    return inner
-
-################################# Code Line Counter ####################################
+################################# Code Line Counter #########################
 def recurse_dir(dir:str = './'):
     """Given the particular days directory, Recurse through and calculate how many lines of code that are uncommented were written for every py file found.
 
@@ -153,7 +159,7 @@ def recurse_dir(dir:str = './'):
 
     return count
 
-#############################  Data Transform Funcs  ############################
+#############################  Data Transform Funcs  ########################
 def process_input(textdata:str, split:bool=True)->list:
     if split:
         data = textdata.splitlines()
@@ -176,7 +182,7 @@ def date_convert(str_time:str)->datetime:
     dateOb = np.datetime64(dateOb, "s")
     return dateOb
 
-################################# Logging Funcs ####################################
+################################# Logging Funcs #############################
 
 def get_file_handler(log_dir:Path) -> logging.FileHandler:
     """Assigns the saved file logger format and location to be saved
@@ -223,7 +229,7 @@ def get_logger(console:Console)->logging.Logger: #log_dir:Path,
     logger.propagate = False
     return logger
 
-################################# Global Vars (Part deux) ##############################
+################################# Global Vars (Part deux) ##################
 #Still don't know why I can't load the logger function up above
 console = Console()
 logger = get_logger(console)

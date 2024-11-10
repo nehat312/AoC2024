@@ -15,8 +15,8 @@ YEAR = 2023 #datetime.now().year
 def part_A():
     #IDEA.  All of this in part A and B should be part of a class dumb dumb
     logger.info("Solving part A")
-    #Check cache and grab puzzle data
-    support._877_cache_now()
+    #Check cache status J.... G.... WENTWORTH.  lol.
+    support._877_cache_now() 
     #Pull puzzle description and testdata
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1, logger)
     #Print the puzzle description to the terminal
@@ -24,21 +24,21 @@ def part_A():
     #print the testdata
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
-    
-    #Call solution functions for testcase
+    #TODO - Call solution functions for testcase
     testcase = "duh"
+    #Assert the testcase is correct
     assert(testcase == "duh")
     input = support.pull_inputdata(DAY, YEAR, logger)
     #Make data a global for part B which will need it.  (easier than passing it)
     global data
     data = support.process_input(input) #Include False to not split
-    #TODO - Call function to solve
+    #TODO - Call solution functions for fulldatainput
     return "duh"
 
 @log_time
 def part_B():
     logger.info("Solving part B")
-    #Check cache and grab puzzle data
+    #Check cache status
     support._877_cache_now()
     #Pull puzzle description and testdata
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2, logger)
@@ -47,13 +47,13 @@ def part_B():
     #print the testdata
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
-    
-    #Call solution functions for testcase
+    #TODO - Call solution functions for testcase
     testcase = "duh"
+    #Assert the testcase is correct
     assert(testcase == "duh")
     global data
     logger.info(f"length of data {len(data)}")
-    #TODO - Call function to solve
+    #TODO - Call solution functions for fulldatainput
     return "duh"
 
 def main():
@@ -72,7 +72,7 @@ def main():
     logger.info(f"Lines of code \n{LOC}")
 
     #Delete the cache after submission
-    # support._877_cache_now(".cache", True)
+    support._877_cache_now(".cache", True)
     
 if __name__ == "__main__":
     main()
