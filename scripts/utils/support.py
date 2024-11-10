@@ -88,7 +88,17 @@ def _877_cache_now(
         logger.critical("cache cleared")
 
 @cache
-def pull_puzzle(day:int, year:int, part:int, logger:logging):
+def pull_puzzle(day:int, year:int, part:int):
+    """This function pulls down the puzzle description with requests
+
+    Args:
+        day (int): Day of AOC
+        year (int): Year of AOC
+        part (int): Which part is being solved
+
+    Returns:
+        _type_: _description_
+    """    
     logger.info("pulling puzzle data")
     url = f"{AOC_URL}/{year}/day/{day}"
     response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
@@ -109,7 +119,7 @@ def pull_puzzle(day:int, year:int, part:int, logger:logging):
     return storytime, sampledata
 
 @cache
-def pull_inputdata(day:int, year:int, logger:logging)->str:
+def pull_inputdata(day:int, year:int)->str:
     logger.info("pulling input data")
     url = f"{AOC_URL}/{year}/day/{day}/input"
     response = requests.get(url, cookies=C_is_for_cookie, timeout=10)

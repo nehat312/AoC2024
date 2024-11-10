@@ -17,7 +17,7 @@ def part_A():
     #Check cache status J.... G.... WENTWORTH. 
     support._877_cache_now() 
     #Pull puzzle description and testdata
-    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1, logger)
+    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1)
     #Print the puzzle description to the terminal
     console.log(f"\n{puzzletext}")
     #print the testdata
@@ -27,7 +27,7 @@ def part_A():
     testcase = "duh"
     #Assert the testcase is correct
     assert(testcase == "duh")
-    input = support.pull_inputdata(DAY, YEAR, logger)
+    input = support.pull_inputdata(DAY, YEAR)
     #Make data a global for part B which will need it.  (easier than passing it)
     global data
     data = support.process_input(input) #Include False to not split
@@ -40,7 +40,7 @@ def part_B():
     #Check cache status
     support._877_cache_now()
     #Pull puzzle description and testdata
-    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2, logger)
+    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2)
     #Print the puzzle description to the terminal
     console.log(f"\n{puzzletext}")
     #print the testdata
