@@ -15,7 +15,7 @@ YEAR = 2023 #datetime.now().year
 def part_A():
     #IDEA.  All of this in part A and B should be part of a class dumb dumb
     logger.info("Solving part A")
-    #Check cache status J.... G.... WENTWORTH.  lol.
+    #Check cache status J.... G.... WENTWORTH. 
     support._877_cache_now() 
     #Pull puzzle description and testdata
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1, logger)
@@ -72,7 +72,7 @@ def main():
     logger.info(f"Lines of code \n{LOC}")
 
     #Delete the cache after submission
-    support._877_cache_now(".cache", True)
+    support._877_cache_now(".cache", False)
     
 if __name__ == "__main__":
     main()

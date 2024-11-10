@@ -57,11 +57,22 @@ def _877_cache_now(
         cache_file:str=".cache", 
         del_cache:bool=False, 
         cache_closed:bool=False
-    ): #Lol. I couldn't resist
+    ): 
+    """
+    First off. I couldn't resist this function naming. Second. This function
+    will iterate through each of the cache files verifying each components existence.  You
+    also may include a boolean variable of whether or not you want to clear the cache
+    when you call to check on it. 
+
+    Args:
+        cache_file (str, optional): Cache file in question. Defaults to ".cache".
+        del_cache (bool, optional): Do you want to delete the cache?. Defaults to False.
+        cache_closed (bool, optional): Has the cache been closed. Defaults to False.
+    """
     cache_files = [f"{cache_file}.{cachetype}" for cachetype in ["bak","dat","dir"]]
     for file in cache_files:
         if os.path.exists(file):
-            logger.info(f"Cache file exists")
+            logger.info(f"Cache file exists-> {file}")
             if del_cache:
                 cache.close()
                 cache_closed = True
