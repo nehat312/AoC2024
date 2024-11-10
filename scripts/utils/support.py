@@ -122,10 +122,10 @@ def pull_inputdata(day:int, year:int, logger:logging)->str:
 
 ################################# submit funcs ##############################
 @cache
-def submit_answer(day:int, year:int, part:int, logger:logging, answer:Any=""):
+def submit_answer(day:int, year:int, part:int, answer:Any=""):
     if not answer:
         logger.warning("No Soup for you!!!! No answer submitted")
-        return 
+        return
     
     logger.info(f"Posting {answer} for part {part}")
     url = f"{AOC_URL}/{year}/day/{day}/answer"
@@ -140,7 +140,7 @@ def submit_answer(day:int, year:int, part:int, logger:logging, answer:Any=""):
         # If there's an error, log it and return no data
         logger.warning(f'Status code: {response.status_code}')
         logger.warning(f'Reason: {response.text}')
-        return None
+        return
     else:
         logger.info(f"AOC day {day} successfully submitted :tada:")
         bs4ob = BeautifulSoup(response.text, "xml")

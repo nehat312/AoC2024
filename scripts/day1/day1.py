@@ -13,7 +13,6 @@ YEAR = 2023 #datetime.now().year
 
 @log_time
 def part_A():
-    #IDEA.  All of this in part A and B should be part of a class dumb dumb
     logger.info("Solving part A")
     #Check cache status J.... G.... WENTWORTH. 
     support._877_cache_now() 
