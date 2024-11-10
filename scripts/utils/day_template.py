@@ -14,6 +14,7 @@ YEAR = 2023 #datetime.now().year
 @log_time
 def part_A():
     #IDEA.  All of this in part A and B should be part of a class dumb dumb
+    logger.info("Solving part A")
     #Check cache and grab puzzle data
     support._877_cache_now()
     #Pull puzzle description and testdata
@@ -36,6 +37,7 @@ def part_A():
 
 @log_time
 def part_B():
+    logger.info("Solving part B")
     #Check cache and grab puzzle data
     support._877_cache_now()
     #Pull puzzle description and testdata
