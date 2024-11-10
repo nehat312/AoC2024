@@ -71,7 +71,7 @@ def main():
     logger.info(f"Lines of code \n{LOC}")
 
     #Delete the cache after submission
-    support._877_cache_now(".cache", False)
+    support._877_cache_now(".cache", True)
     
 if __name__ == "__main__":
     main()
