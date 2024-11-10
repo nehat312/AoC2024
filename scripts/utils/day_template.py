@@ -7,8 +7,17 @@ from utils.support import log_time, logger, console
 from utils import support
 from datetime import datetime
 
+#Set day/year global variables
+DAY = 1 #datetime.now().day
+YEAR = 2023 #datetime.now().year
+
 @log_time
 def part_A():
+    cached_dat_check = support._877_cache_now()
+    if cached_dat_check:
+        logger.info("Cache exists")
+    else:
+        logger.info("Creating Cache")
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1, logger)
     console.log(f"\n{puzzletext}")
     testdata = support.process_input(testdata)
@@ -28,11 +37,6 @@ def part_B(test_data:list):
     return "duh"
 
 def main():
-    #Set day variable
-    global DAY, YEAR
-    DAY = 1 #datetime.now().day
-    YEAR = 2023 #datetime.now().year
-    
     #Solve part A
     resultA, test_data = part_A()
     logger.info(f"Part A solution: \n{resultA}\n")
