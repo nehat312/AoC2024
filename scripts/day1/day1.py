@@ -21,18 +21,18 @@ def part_A():
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1)
     #Print the puzzle description to the terminal
     console.log(f"\n{puzzletext}")
-    #print the testdata
+    #process/print the testdata
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
-    #TODO - Call solution functions for testcase
+    #TODO - Write solution functions for testcase
     testcase = "duh"
     #Assert the testcase is correct
     assert(testcase == "duh")
     input = support.pull_inputdata(DAY, YEAR)
-    #Make data a global for part B which will need it.  (easier than passing it)
+    #Make data a global for part B.  (easier than passing it)
     global data
     data = support.process_input(input) #Include False to not split
-    #TODO - Call solution functions for fulldatainput
+    #TODO - Write solution functions for fulldatainput
     return "duh"
 
 @log_time
@@ -44,16 +44,16 @@ def part_B():
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2)
     #Print the puzzle description to the terminal
     console.log(f"\n{puzzletext}")
-    #print the testdata
+    #process/print the testdata
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
-    #TODO - Call solution functions for testcase
+    #TODO - Write solution functions for testcase
     testcase = "duh"
     #Assert the testcase is correct
     assert(testcase == "duh")
     global data
     logger.info(f"length of full dataset-> {len(data)}")
-    #TODO - Call solution functions for fulldatainput
+    #TODO - Write solution functions for fulldatainput
     return "duh"
 
 def main():
