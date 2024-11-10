@@ -22,8 +22,10 @@ def part_A():
     console.log(f"\n{puzzletext}")
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
-    testresult = "duh"
-    assert(testresult == "duh")
+    
+    #Call solution functions for testcase
+    testcase = "duh"
+    assert(testcase == "duh")
     input = support.pull_inputdata(DAY, YEAR, logger)
     data = support.process_input(input) #Include False to not split
     return "duh"
@@ -35,15 +37,18 @@ def part_B():
     if cache_check:
         logger.info("Cache exists")
     else:
-        logger.info("Creating Cache")
+        logger.info("Creating cache")
 
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2, logger)
     #Print the puzzle to terminal
     console.log(f"\n{puzzletext}")
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
-    testresult = "duh"
-    assert(testresult =="duh")
+
+    
+    #Call solution functions for testcase
+    testcase = "duh"
+    assert(testcase == "duh")
     input = support.pull_inputdata(DAY, YEAR, logger)
     data = support.process_input(input) #Include False to not split
     return "duh"
@@ -61,6 +66,8 @@ def main():
     LOC = support.recurse_dir(f'./scripts/day{DAY}/')
     logger.info(f"Lines of code \n{LOC}")
 
+    support._877_cache_now(".cache", True)
+    
 if __name__ == "__main__":
     main()
 

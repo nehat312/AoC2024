@@ -16,5 +16,5 @@ These are my solutions for the [Advent of Code 2024](https://adventofcode.com/20
 - [x] No more uploading the text files you moob.
 - [x] Make a function to pull down the sample data - requests
 - [x] Credit anze3db for utils updates.
-- [ ] Build function that stores the input puzzle data locally in a text file. 
+- [x] Build function that stores the input puzzle data locally in a text file. 
 - [ ] Something that captures the output and updates the README? SORCERY

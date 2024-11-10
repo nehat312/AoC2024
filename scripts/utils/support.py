@@ -24,16 +24,22 @@ cache.expire = timedelta(hours=1)
 #TODO.  Add an AOC class for functionality sake. 
 #Need for testing
 
-
 ################################ data pulling funcs ########################
-def _877_cache_now(cache_file=".cache", del_cache:bool=False): #Lol. I couldn't resist
+def _877_cache_now(cache_file=".cache", del_cache:bool=False, cache_closed:bool=False): #Lol. I couldn't resist
     cache_files = [f"{cache_file}.{cachetype}" for cachetype in ["bak","dat","dir"]]
     for file in cache_files:
         if os.path.exists(file):
             if del_cache:
-                os.remove(file)
+                cache.close()
+                cache_closed = True
+                break
         else:
             return False
+        
+    if cache_closed:
+        [os.remove(file) for file in cache_files]
+        logger.critical("cache cleared")
+
     return True    
 
 
@@ -74,28 +80,27 @@ def pull_inputdata(day:int, year:int, logger:logging)->str:
         logger.info(f"day {day} data retrieved")
         return response.text
 
-#TODO - Build function that stores the input data locally in a text file. 
-#Hidden in the gitignore, but, have it contain logic that if its
-#already downloaded either the puzzle / or input.  To not redownload them
-#so as to not hammer Eric's servers.  Wait.  Wouldn't this already be stored
-# in your cache? I think that means you'd only pull it once but check
-
 ################################# submit funcs ####################################
 #TODO - Build these, but go hang out with your fiancee for a while
 
 ################################# Timing Funcs ####################################
 def log_time(fn):
+    """Decorator timing function.  Accepts any function and returns a logging statement with the amount of time it took to run. DJ, I use this code everywhere still.  Thank you bud!
+
+    Args:
+        fn (function): Input function you want to time
+    """	
     def inner(*args, **kwargs):
         tnow = time.time()
         out = fn(*args, **kwargs)
         te = time.time()
         took = te - tnow
         if took <= .000_001:
-            logger.info(f"{fn.__name__} ran in {took*1_000_000_000:.3f} ns")
+            logger.info(f"{fn.__name__} ran in {took*1_000_000_000:.2f} ns")
         elif took <= .001:
-            logger.info(f"{fn.__name__} ran in {took*1_000_000:.3f} μs")
+            logger.info(f"{fn.__name__} ran in {took*1_000_000:.2f} μs")
         elif took <= 1:
-            logger.info(f"{fn.__name__} ran in {took*1_000:.3f} ms")
+            logger.info(f"{fn.__name__} ran in {took*1_000:.2f} ms")
         elif took <= 60:
             logger.info(f"{fn.__name__} ran in {took:.2f} s")
         elif took <= 3600:
