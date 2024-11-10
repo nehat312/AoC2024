@@ -23,6 +23,7 @@ def part_A():
     console.log(f"\n{puzzletext}")
     #process/print the testdata
     testdata = support.process_input(testdata)
+    #move logger to process input
     [logger.warning(f"{td}") for td in testdata]
     #TODO - Write solution functions for testcase
     testcase = "duh"
