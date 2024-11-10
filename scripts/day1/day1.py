@@ -9,7 +9,7 @@ from datetime import datetime
 
 
 @log_time
-def part_A(DAY:int, YEAR:int):
+def part_A():
     puzzletext, data = support.pull_puzzle(DAY, YEAR, 1, logger)
     console.log(f"\n{puzzletext}")
     data = support.process_input(data)
@@ -18,7 +18,7 @@ def part_A(DAY:int, YEAR:int):
     return "duh", data
 
 @log_time
-def part_B(DAY:int, YEAR:int, test_data):
+def part_B(test_data:list):
     #Solve part B
     console.log(f"\n{support.pull_puzzle(DAY, YEAR, 2, logger)}")
     data = test_data
@@ -26,16 +26,16 @@ def part_B(DAY:int, YEAR:int, test_data):
 
 def main():
     #Set day variable
-    #TODO - make global vars.  like GPU TUI.  hint after name
+    global DAY, YEAR
     DAY = 1 #datetime.now().day
     YEAR = 2023 #datetime.now().year
     
     #Solve part A
-    resultA, test_data = part_A(DAY, YEAR)
+    resultA, test_data = part_A()
     logger.info(f"Part A solution: \n{resultA}\n")
     
     #Solve part B
-    resultB = part_B(DAY, YEAR, test_data)
+    resultB = part_B(test_data)
     logger.info(f"Part B solution: \n{resultB}\n")
     
     #Recurse lines of code
