@@ -94,7 +94,7 @@ def pull_puzzle(day:int, year:int, part:int):
         part (int): Which part is being solved
 
     Returns:
-        _type_: _description_
+        tuple(storytime[str], sampledata[list]): storytime->The text for the puzzle, sampledata->The testcase dataset
     """    
     logger.info("pulling puzzle data")
     url = f"{AOC_URL}/{year}/day/{day}"
@@ -117,6 +117,15 @@ def pull_puzzle(day:int, year:int, part:int):
 
 @cache
 def pull_inputdata(day:int, year:int)->str:
+    """This function retrieves the full dataset for evaluation.
+
+    Args:
+        day (int): Day of AOC
+        year (int): Year of AOC
+
+    Returns:
+        reasponse.text (str): the dataset in string form
+    """
     logger.info("pulling input data")
     url = f"{AOC_URL}/{year}/day/{day}/input"
     response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
@@ -134,6 +143,14 @@ def pull_inputdata(day:int, year:int)->str:
 ################################# submit funcs ##############################
 @cache
 def submit_answer(day:int, year:int, part:int, answer:Any=""):
+    """This cached function will submit your answers for official scoring.
+
+    Args:
+        day (int): Day of AOC
+        year (int): Year of AOC
+        part (int): Which part is being solved
+        answer (Any, optional): Answer to part. Defaults to "".
+    """
     if not answer:
         logger.warning("No Soup for you!!!! No answer submitted")
         return
@@ -185,6 +202,15 @@ def recurse_dir(dir:str = './'):
 
 #############################  Data Transform Funcs  ########################
 def process_input(textdata:str, split:bool=True)->list:
+    """Function to process input datasets.  Both testcase and full datasets
+
+    Args:
+        textdata (str): Usually one huge string of the input data
+        split (bool, optional): Whether or not you want to newline split the string. Defaults to True.
+
+    Returns:
+        arr (list): List of the dataset
+    """    
     if split:
         data = textdata.splitlines()
         arr = [x.strip() if x != "" else "" for x in data]
