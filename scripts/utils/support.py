@@ -15,7 +15,7 @@ from typing import Any
 ################################ Global Vars ##############################
 AOC_URL = "https://www.adventofcode.com"
 with open("./secret/cookie.txt", "r") as f:
-    C_is_for_cookie = {"session":f.readline()}
+    C_IS_4_COOKIE = {"session":f.readline()}
 
 cache = percache.Cache(".cache", livesync=True)
 cache.expire = timedelta(hours=1)
@@ -98,7 +98,7 @@ def pull_puzzle(day:int, year:int, part:int):
     """    
     logger.info("pulling puzzle data")
     url = f"{AOC_URL}/{year}/day/{day}"
-    response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
+    response = requests.get(url, cookies=C_IS_4_COOKIE, timeout=10)
     
     #Be nice to the servers
     if response.status_code != 200:
@@ -128,7 +128,7 @@ def pull_inputdata(day:int, year:int)->str:
     """
     logger.info("pulling input data")
     url = f"{AOC_URL}/{year}/day/{day}/input"
-    response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
+    response = requests.get(url, cookies=C_IS_4_COOKIE, timeout=10)
     
     #Be nice to the servers
     if response.status_code != 200:
@@ -160,7 +160,7 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
     response = requests.post(
         url = url,
         data = {"level":part, "answer":answer},
-        cookies = C_is_for_cookie, 
+        cookies = C_IS_4_COOKIE, 
         timeout = 10
     )
     #Be nice to the servers
