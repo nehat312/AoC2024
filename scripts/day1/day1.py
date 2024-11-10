@@ -13,13 +13,14 @@ YEAR = 2023 #datetime.now().year
 
 @log_time
 def part_A():
-    cache_check = support._877_cache_now()
-    if cache_check:
-        logger.info("Cache exists")
-    else:
-        logger.info("Creating Cache")
+    #IDEA.  All of this in part A and B should be part of a class dumb dumb
+    #Check cache and grab puzzle data
+    support._877_cache_now()
+    #Pull puzzle description and testdata
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1, logger)
+    #Print the puzzle description to the terminal
     console.log(f"\n{puzzletext}")
+    #print the testdata
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
     
@@ -27,29 +28,30 @@ def part_A():
     testcase = "duh"
     assert(testcase == "duh")
     input = support.pull_inputdata(DAY, YEAR, logger)
+    #Make data a global for part B which will need it.  (easier than passing it)
+    global data
     data = support.process_input(input) #Include False to not split
+    #TODO - Call function to solve
     return "duh"
 
 @log_time
 def part_B():
     #Check cache and grab puzzle data
-    cache_check = support._877_cache_now()
-    if cache_check:
-        logger.info("Cache exists")
-    else:
-        logger.info("Creating cache")
-
+    support._877_cache_now()
+    #Pull puzzle description and testdata
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2, logger)
-    #Print the puzzle to terminal
+    #Print the puzzle description to the terminal
     console.log(f"\n{puzzletext}")
+    #print the testdata
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
     
     #Call solution functions for testcase
     testcase = "duh"
     assert(testcase == "duh")
-    input = support.pull_inputdata(DAY, YEAR, logger)
-    data = support.process_input(input) #Include False to not split
+    global data
+    logger.info(f"length of data {len(data)}")
+    #TODO - Call function to solve
     return "duh"
 
 def main():
@@ -68,7 +70,7 @@ def main():
     logger.info(f"Lines of code \n{LOC}")
 
     #Delete the cache after submission
-    support._877_cache_now(".cache", True)
+    # support._877_cache_now(".cache", True)
     
 if __name__ == "__main__":
     main()

@@ -30,19 +30,16 @@ def _877_cache_now(cache_file=".cache", del_cache:bool=False, cache_closed:bool=
     cache_files = [f"{cache_file}.{cachetype}" for cachetype in ["bak","dat","dir"]]
     for file in cache_files:
         if os.path.exists(file):
+            logger.info("Cache exists")
             if del_cache:
                 cache.close()
                 cache_closed = True
                 break
         else:
-            return False
-        
+            logger.info("Creating Cache")
     if cache_closed:
         [os.remove(file) for file in cache_files]
         logger.critical("cache cleared")
-
-    return True    
-
 
 @cache
 def pull_puzzle(day:int, year:int, part:int, logger:logging):
