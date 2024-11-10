@@ -27,7 +27,10 @@ cache.expire = timedelta(hours=1)
 
 ################################# Timing Funcs ##############################
 def log_time(fn):
-    """Decorator timing function.  Accepts any function and returns a logging statement with the amount of time it took to run. DJ, I use this code everywhere still.  Thank you bud!
+    """
+    Decorator timing function.  Accepts any function and returns a logging
+    statement with the amount of time it took to run. DJ, I use this code
+    everywhere still.  Thank you bud!
 
     Args:
         fn (function): Input function you want to time
@@ -60,9 +63,9 @@ def _877_cache_now(
     ): 
     """
     First off. I couldn't resist this function naming. Second. This function
-    will iterate through each of the cache files verifying each components existence.  You
-    also may include a boolean variable of whether or not you want to clear the cache
-    when you call to check on it. 
+    will iterate through each of the cache files verifying each components
+    existence.  You also may include a boolean variable of whether or not you
+    want to clear the cache when you call to check on it. 
 
     Args:
         cache_file (str, optional): Cache file in question. Defaults to ".cache".
@@ -151,7 +154,9 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
 
 ################################# Code Line Counter #########################
 def recurse_dir(dir:str = './'):
-    """Given the particular days directory, Recurse through and calculate how many lines of code that are uncommented were written for every py file found.
+    """
+    Given the particular days directory, Recurse through and calculate how many
+    lines of code that are uncommented were written for every py file found.
 
     Args:
         dir (str, optional): Directory you want to search. Defaults to './'.
@@ -182,7 +187,9 @@ def process_input(textdata:str, split:bool=True)->list:
 
 
 def date_convert(str_time:str)->datetime:
-    """When Loading the historical data.  Turn all the published dates into datetime objects so they can be sorted in the save routine. 
+    """
+    When Loading the historical data.  Turn all the published dates into
+    datetime objects so they can be sorted in the save routine. 
 
     Args:
         str_time (str): Converts a string to a datetime object 
@@ -225,14 +232,19 @@ def get_rich_handler(console:Console) -> RichHandler:
     return rh
 
 def get_logger(console:Console)->logging.Logger: #log_dir:Path, 
-    """Loads logger instance.  When given a path and access to the terminal output.  The logger will save a log of all records, as well as print it out to your terminal. Propogate set to False assigns all captured log messages to both handlers.
+    """
+    Loads logger instance.  When given a path and access to the terminal output.
+    The logger will save a log of all records, as well as print it out to your
+    terminal. Propogate set to False assigns all captured log messages to both
+    handlers.
 
     Args:
         log_dir (Path): Path you want the logs saved
         console (Console): Reference to your terminal
 
     Returns:
-        logger: Returns custom logger object.  Info level reporting with a file handler and rich handler to properly terminal print
+        logger: Returns custom logger object.  Info level reporting with a file
+        handler and rich handler to properly terminal print
     """	
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
