@@ -17,21 +17,26 @@ with open("./secret/cookie.txt", "r") as f:
     C_is_for_cookie = {"session":f.readline()}
 
 cache = percache.Cache(".cache", livesync=True)
-cache.expire = timedelta(seconds=60)
+cache.expire = timedelta(hours=1)
 
-################################ AoC Class ################################
+############# ################### AoC Class ################################
 
 #TODO.  Add an AOC class for functionality sake. 
 #Need for testing
 
 
 ################################ data pulling funcs ########################
-def _877_cache_now(): #Lol. I couldn't resist
-    if os.path.exists(".cache"):
-        return True
-    else:
-        return False
-    
+def _877_cache_now(cache_file=".cache", del_cache:bool=False): #Lol. I couldn't resist
+    cache_files = [f"{cache_file}.{cachetype}" for cachetype in ["bak","dat","dir"]]
+    for file in cache_files:
+        if os.path.exists(file):
+            if del_cache:
+                os.remove(file)
+        else:
+            return False
+    return True    
+
+
 @cache
 def pull_puzzle(day:int, year:int, part:int, logger:logging):
     logger.info("pulling puzzle data")

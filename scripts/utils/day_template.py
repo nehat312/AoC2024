@@ -13,8 +13,8 @@ YEAR = 2023 #datetime.now().year
 
 @log_time
 def part_A():
-    cached_dat_check = support._877_cache_now()
-    if cached_dat_check:
+    cache_check = support._877_cache_now()
+    if cache_check:
         logger.info("Cache exists")
     else:
         logger.info("Creating Cache")
@@ -22,27 +22,39 @@ def part_A():
     console.log(f"\n{puzzletext}")
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
-    # input = support.pull_inputdata(DAY, YEAR, logger)
-    # data = support.process_input(input) #Include False to not split
-    return "duh", testdata #switch to data return for runtime
+    testresult = "duh"
+    assert(testresult == "duh")
+    input = support.pull_inputdata(DAY, YEAR, logger)
+    data = support.process_input(input) #Include False to not split
+    return "duh"
 
 @log_time
-def part_B(test_data:list):
+def part_B():
+    #Check cache and grab puzzle data
+    cache_check = support._877_cache_now()
+    if cache_check:
+        logger.info("Cache exists")
+    else:
+        logger.info("Creating Cache")
+
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2, logger)
+    #Print the puzzle to terminal
     console.log(f"\n{puzzletext}")
     testdata = support.process_input(testdata)
     [logger.warning(f"{td}") for td in testdata]
-    # input = support.pull_inputdata(DAY, YEAR, logger)
-    # data = support.process_input(input) #Include False to not split
+    testresult = "duh"
+    assert(testresult =="duh")
+    input = support.pull_inputdata(DAY, YEAR, logger)
+    data = support.process_input(input) #Include False to not split
     return "duh"
 
 def main():
     #Solve part A
-    resultA, test_data = part_A()
+    resultA = part_A()
     logger.info(f"Part A solution: \n{resultA}\n")
     
     #Solve part B
-    resultB = part_B(test_data)
+    resultB = part_B()
     logger.info(f"Part B solution: \n{resultB}\n")
     
     #Recurse lines of code
