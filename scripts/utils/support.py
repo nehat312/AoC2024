@@ -1,16 +1,16 @@
-import time
 import os
+import time
 import logging
 import datetime
+import percache
+import requests
 import numpy as np
+from typing import Any
 from pathlib import Path
+from bs4 import BeautifulSoup
+from datetime import timedelta
 from rich.console import Console
 from rich.logging import RichHandler
-import requests
-import percache
-from datetime import timedelta
-from bs4 import BeautifulSoup
-from typing import Any
 
 ################################ Global Vars ##############################
 AOC_URL = "https://www.adventofcode.com"
@@ -152,10 +152,10 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
         answer (Any, optional): Answer to part. Defaults to "".
     """
     if not answer:
-        logger.warning("No Soup for you!!!! No answer submitted")
+        logger.critical("No Soup for you!!!! No answer submitted")
         return
     
-    logger.info(f"Posting {answer} for part {part}")
+    logger.warning(f"Posting {answer} for part {part}")
     url = f"{AOC_URL}/{year}/day/{day}/answer"
     response = requests.post(
         url = url,
@@ -195,6 +195,7 @@ def recurse_dir(dir:str = './'):
         elif file.endswith('.py'):
             with open(dir + file, 'r') as f:
                 for line in f.readlines():
+                    #Don't count any line that starts with # or is empty
                     if (not line.strip().startswith('#')) and (not line.strip() == ''):
                         count += 1
 
