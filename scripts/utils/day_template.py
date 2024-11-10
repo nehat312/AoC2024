@@ -8,15 +8,15 @@ from utils import support
 from datetime import datetime
 
 #Set day/year global variables
-DAY = 1 #datetime.now().day
-YEAR = 2023 #datetime.now().year
+DAY:int = 1 #datetime.now().day
+YEAR:int = 2023 #datetime.now().year
 
 @log_time
 def part_A():
     logger.info("Solving part A")
-    #to check your cache status and you need cache nooooow
+    #to check your cache status when you need cache nooooow
     #call J.... G.... WENTWORTH. 
-    support._877_cache_now() #Lol
+    support._877_cache_now() #Lol. I blame myself
     #Pull puzzle description and testdata
     puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1)
     #Print the puzzle description to the terminal
