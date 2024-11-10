@@ -14,20 +14,22 @@ def part_A():
     console.log(f"\n{puzzletext}")
     data = support.process_input(data)
     # input = support.pull_inputdata(DAY, YEAR, logger)
-    # data = process_input(input) #Include False to not split
+    # data = support.process_input(input) #Include False to not split
     return "duh", data
 
 @log_time
 def part_B(test_data:list):
-    #Solve part B
-    console.log(f"\n{support.pull_puzzle(DAY, YEAR, 2, logger)}")
-    data = test_data
-    return None
+    puzzletext, data = support.pull_puzzle(DAY, YEAR, 2, logger)
+    console.log(f"\n{puzzletext}")
+    data = support.process_input(data)
+    # input = support.pull_inputdata(DAY, YEAR, logger)
+    # data = support.process_input(input) #Include False to not split
+    return "duh", data
 
 def main():
     #Set day variable
     global DAY, YEAR
-    DAY = 1 #datetime.now().day
+    DAY = 2 #datetime.now().day
     YEAR = 2023 #datetime.now().year
     
     #Solve part A
@@ -35,7 +37,7 @@ def main():
     logger.info(f"Part A solution: \n{resultA}\n")
     
     #Solve part B
-    resultB = part_B(test_data)
+    resultB, test_data = part_B(test_data)
     logger.info(f"Part B solution: \n{resultB}\n")
     
     #Recurse lines of code

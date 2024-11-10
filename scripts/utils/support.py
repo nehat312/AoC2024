@@ -21,7 +21,7 @@ def pull_puzzle(day:int, year:int, part:int, logger:logging):
     url = f"{AOC_URL}/{year}/day/{day}"
     response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
     
-    #Just in case we piss someone off
+    #Be nice to the servers
     if response.status_code != 200:
         # If there's an error, log it and return no data
         logger.warning(f'Status code: {response.status_code}')
@@ -31,12 +31,10 @@ def pull_puzzle(day:int, year:int, part:int, logger:logging):
         logger.info(f"day {day} data retrieved")
 
     bs4ob = BeautifulSoup(response.text, features="xml")
-    storytime = bs4ob.find_all("article")[part - 1].get_text()
-    sampledata = bs4ob.find_all("code")[part - 1].get_text()
-    if part == 1:
-        return storytime, sampledata
-    if part == 2:
-        return storytime
+    subtext = bs4ob.find_all("article")[part - 1]
+    storytime = subtext.get_text()
+    sampledata = subtext.select("pre")[0].text
+    return storytime, sampledata
 
 @cache
 def pull_inputdata(day:int, year:int, logger:logging)->str:
@@ -44,7 +42,7 @@ def pull_inputdata(day:int, year:int, logger:logging)->str:
     url = f"{AOC_URL}/{year}/day/{day}/input"
     response = requests.get(url, cookies=C_is_for_cookie, timeout=10)
     
-    #Just in case we piss someone off
+    #Be nice to the servers
     if response.status_code != 200:
         # If there's an error, log it and return no data
         logger.warning(f'Status code: {response.status_code}')
@@ -177,7 +175,7 @@ def get_logger(console:Console)->logging.Logger: #log_dir:Path,
     logger.propagate = False
     return logger
 
-################################# Global Vars (Part duex) ##############################
+################################# Global Vars (Part deux) ##############################
 #Still don't know why I can't load the logger function up above
 console = Console()
 logger = get_logger(console)
