@@ -26,6 +26,7 @@ def part_B(DAY:int, YEAR:int, test_data):
 
 def main():
     #Set day variable
+    #TODO - make global vars
     DAY = 1 #datetime.now().day
     YEAR = 2023 #datetime.now().year
     
