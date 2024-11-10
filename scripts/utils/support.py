@@ -62,10 +62,11 @@ def _877_cache_now(
         cache_closed:bool=False
     ): 
     """
-    First off. I couldn't resist this function naming. Second. This function
-    will iterate through each of the cache files verifying each components
-    existence.  You also may include a boolean variable of whether or not you
-    want to clear the cache when you call to check on it. 
+    First off. I couldn't resist the JG Wentworth shoutout in the function
+    naming. Second. This function will iterate through each of the cache files
+    verifying each components existence.  You also may include a boolean
+    variable of whether or not you want to clear the cache when you call to
+    check on it. 
 
     Args:
         cache_file (str, optional): Cache file in question. Defaults to ".cache".
