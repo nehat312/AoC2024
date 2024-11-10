@@ -20,11 +20,6 @@ with open("./secret/cookie.txt", "r") as f:
 cache = percache.Cache(".cache", livesync=True)
 cache.expire = timedelta(hours=1)
 
-############# ################### AoC Class ################################
-
-#TODO.  Add an AOC class for functionality sake. 
-#Need for testing
-
 ################################# Timing Funcs ##############################
 def log_time(fn):
     """
@@ -162,7 +157,7 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
         bs4ob = BeautifulSoup(response.text, "xml")
         console.log(bs4ob.find_all("article")[2].get_text())
 
-#TODO - Will need to come back and check these
+#TODO - Will need to come back and check this function closer to start of AOC
 
 ################################# Code Line Counter #########################
 def recurse_dir(dir:str = './'):
