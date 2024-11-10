@@ -107,7 +107,7 @@ def pull_puzzle(day:int, year:int, part:int):
         logger.warning(f'Reason: {response.reason}')
         return None
     else:
-        logger.info(f"day {day} data retrieved")
+        logger.info(f"day {day} puzzle desc retrieved")
 
     bs4ob = BeautifulSoup(response.text, features="xml")
     subtext = bs4ob.find_all("article")[part - 1]
@@ -137,7 +137,7 @@ def pull_inputdata(day:int, year:int)->str:
         logger.warning(f'Reason: {response.reason}')
         return None
     else:
-        logger.info(f"day {day} data retrieved")
+        logger.info(f"day {day} input data retrieved")
         return response.text
 
 ################################# submit funcs ##############################
