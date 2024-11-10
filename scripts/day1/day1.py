@@ -7,29 +7,30 @@ from utils.support import log_time, logger, console
 from utils import support
 from datetime import datetime
 
-
 @log_time
 def part_A():
-    puzzletext, data = support.pull_puzzle(DAY, YEAR, 1, logger)
+    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1, logger)
     console.log(f"\n{puzzletext}")
-    data = support.process_input(data)
+    testdata = support.process_input(testdata)
+    [logger.warning(f"{td}") for td in testdata]
     # input = support.pull_inputdata(DAY, YEAR, logger)
     # data = support.process_input(input) #Include False to not split
-    return "duh", data
+    return "duh", testdata #switch to data return for runtime
 
 @log_time
 def part_B(test_data:list):
-    puzzletext, data = support.pull_puzzle(DAY, YEAR, 2, logger)
+    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2, logger)
     console.log(f"\n{puzzletext}")
-    data = support.process_input(data)
+    testdata = support.process_input(testdata)
+    [logger.warning(f"{td}") for td in testdata]
     # input = support.pull_inputdata(DAY, YEAR, logger)
     # data = support.process_input(input) #Include False to not split
-    return "duh", data
+    return "duh"
 
 def main():
     #Set day variable
     global DAY, YEAR
-    DAY = 2 #datetime.now().day
+    DAY = 1 #datetime.now().day
     YEAR = 2023 #datetime.now().year
     
     #Solve part A
@@ -37,7 +38,7 @@ def main():
     logger.info(f"Part A solution: \n{resultA}\n")
     
     #Solve part B
-    resultB, test_data = part_B(test_data)
+    resultB = part_B(test_data)
     logger.info(f"Part B solution: \n{resultB}\n")
     
     #Recurse lines of code
