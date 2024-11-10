@@ -7,14 +7,31 @@ from pathlib import Path
 from rich.console import Console
 from rich.logging import RichHandler
 import requests
-from functools import cache
+import percache
+from datetime import timedelta
 from bs4 import BeautifulSoup
-################################# Global Vars ##############################
+
+################################ Global Vars ##############################
 AOC_URL = "https://www.adventofcode.com"
 with open("./secret/cookie.txt", "r") as f:
     C_is_for_cookie = {"session":f.readline()}
 
-################################# data pulling funcs ##############################
+cache = percache.Cache(".cache", livesync=True)
+cache.expire = timedelta(seconds=60)
+
+################################ AoC Class ################################
+
+#TODO.  Add an AOC class for functionality sake. 
+#Need for testing
+
+
+################################ data pulling funcs ########################
+def _877_cache_now(): #Lol. I couldn't resist
+    if os.path.exists(".cache"):
+        return True
+    else:
+        return False
+    
 @cache
 def pull_puzzle(day:int, year:int, part:int, logger:logging):
     logger.info("pulling puzzle data")

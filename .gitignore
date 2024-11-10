@@ -140,6 +140,9 @@ dmypy.json
 *.xlsx
 *.json
 *.pickle
+*.cache.bak
+*.cache.dir
+*.cache.dat
 .Rhistory
 .DS_Store
 

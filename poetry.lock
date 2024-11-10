@@ -781,6 +781,16 @@ files = [
 ]
 
 [[package]]
+name = "percache"
+version = "0.4.4"
+description = "Persistently cache results of callables"
+optional = false
+python-versions = "*"
+files = [
+    {file = "percache-0.4.4.tar.gz", hash = "sha256:04b08b9d775b0e88666c14cfd6627691cc056ec526a4608f620595d68d1e31a2"},
+]
+
+[[package]]
 name = "pillow"
 version = "11.0.0"
 description = "Python Imaging Library (Fork)"
@@ -995,4 +1005,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "313436e4ce36e0d95ee1de77850533816ecb312ba5b5994fb6a7c456076e6168"
+content-hash = "8bac2ea8714ce574028be015eceaaf6ed328e17f4afb2f4fbdcedec61c0b375d"
