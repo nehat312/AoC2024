@@ -42,8 +42,12 @@ def problemsolver(arr:list) -> int:
     def pipe_connects(row:int, col:int, cur_pos:tuple) -> bool:
         direction = dir_traveled(row, col, cur_pos)
         if isinstance(direction, str):
-            pos_direct = move_dict[arr[row][col]]
-            if (direction == rev_dict[pos_direct[0]]) | (direction == rev_dict[pos_direct[1]]):
+            cur_pos_dirs = move_dict[arr[cur_pos[0][cur_pos[1]]]]
+            nex_pos_dirs = move_dict[arr[row][col]]
+            #BUG - Problem is here in the directional comparison
+            #I need to make sure the current possible directions match 
+            #the reversed of the next_pos_dirs
+            if (direction == rev_dict[nex_pos_dirs[0]]) | (direction == rev_dict[nex_pos_dirs[1]]):
                 return True
             else:
                 return False
@@ -66,8 +70,8 @@ def problemsolver(arr:list) -> int:
         "W":"E",
     }
     #Find the start position
-    searchforit = [[(row, col) for col in range(len(arr[0])) if arr[row][col] == "S"] for row in range(len(arr))]
-    start = cur_pos = list(chain(*searchforit))[0]
+    searchforstart = [[(row, col) for col in range(len(arr[0])) if arr[row][col] == "S"] for row in range(len(arr))]
+    start = cur_pos = list(chain(*searchforstart))[0]
     steps = 0
     last_p = ""
     stopcount = False
@@ -85,12 +89,15 @@ def problemsolver(arr:list) -> int:
                         stopcount = True
                     else:
                         #if the pipe connects, step
+                        if steps == 6:
+                            logger.info(f"pause for the cause")
+
                         if pipe_connects(row, col, cur_pos):
+                            went = dir_traveled(row, col, cur_pos)
                             last_p = cur_pos
                             cur_pos = (row, col)
                             steps += 1
-                        else:
-                            continue
+                            logger.info(f"stepcount:{steps} from:{last_p} to {cur_pos} -> {went}")
 
                         #Need logic to continue here.  Probably source of bug
     return steps // 2
