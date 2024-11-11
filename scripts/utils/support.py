@@ -124,7 +124,7 @@ def pull_inputdata(day:int, year:int)->str:
         year (int): Year of AOC
 
     Returns:
-        reasponse.text (str): the dataset in string form
+        response.text (str): the dataset in string form
     """
     logger.info("pulling input data")
     url = f"{AOC_URL}/{year}/day/{day}/input"
