@@ -11,6 +11,9 @@ from datetime import datetime
 DAY:int = 1 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
 
+# def problemsolver(inputdata:list):
+#     pass
+
 @log_time
 def part_A():
     logger.info("Solving part A")
@@ -24,7 +27,7 @@ def part_A():
     #Assert testcase
     assert testcase == ""
     #Solve puzzle with full dataset
-    answerA = "" #problemsolver(data)
+    answerA = "Marla" #problemsolver(data)
     return answerA
 
 @log_time
@@ -39,7 +42,7 @@ def part_B():
     #Assert testcase
     assert testcase == ""
     #Solve puzzle with full dataset
-    answerB = "" #problemsolver(data)
+    answerB = "Hooch\nWhat a hitter! :bat: " #problemsolver(data)
     logger.info(f"length of full dataset-> {len(data)}")
     return answerB
 
