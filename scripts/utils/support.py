@@ -140,7 +140,7 @@ def _877_cache_now(
         logger.critical("cache cleared")
 
 @cache
-def pull_puzzle(day:int, year:int, part:int):
+def pull_puzzle(day:int, year:int, part:int)-> str:
     """This function pulls down the puzzle description with requests
 
     Args:
@@ -149,7 +149,7 @@ def pull_puzzle(day:int, year:int, part:int):
         part (int): Which part is being solved
 
     Returns:
-        sampledata[list]: sampledata->The testcase dataset
+        sampledata[str]: The testcase dataset in str form
     """    
     logger.info("pulling puzzle data")
     url = f"{AOC_URL}/{year}/day/{day}"
@@ -168,9 +168,10 @@ def pull_puzzle(day:int, year:int, part:int):
     subtext = bs4ob.find_all("article")[part - 1]
     storytime = subtext.get_text()
     sampledata = subtext.select("pre")[0].text
+
     #Print the puzzle description to the terminal
     console.log(f"\n{storytime}")
-    
+
     return sampledata
 
 @cache
