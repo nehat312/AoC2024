@@ -22,7 +22,6 @@ cache.expire = timedelta(hours=1)
 
 #TODO - Create func that can add rows and / or update a markdown table.   or store it in a dataclass.  I'd like it to be able to add new days and update it as I complete sections.  
 
-
 ################################# Timing Funcs ##############################
 def log_time(fn):
     """
