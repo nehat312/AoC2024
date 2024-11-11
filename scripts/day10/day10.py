@@ -12,35 +12,40 @@ DAY:int = 10 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
 
     
-def problemsolver(arr:list):
-    def onboard(x:int, y:int)->bool:
+def problemsolver(arr:list) -> int:
+    def onboard(x:int, y:int) -> bool:
         height, width  = len(arr), len(arr[0])
-        if (x < 0) | (x > height):
+        if (x < 0) | (x >= height):
+            # logger.warning(f"({x}, {y}) not on board")
             return False
-        elif (y < 0) | (y > width):
+        elif (y < 0) | (y >= width):
+            # logger.warning(f"({x}, {y}) not on board")
             return False
         else:
             return True
         
-    def dir_traveled(x:int, y:int, cur_pos:int)->str:
+    def dir_traveled(x:int, y:int, cur_pos:tuple)->str:
         if x != cur_pos[0]:
             if x < cur_pos[0]:
-                return "W"
-            elif x > cur_pos[0]:
-                return "E"
-        elif x != cur_pos[1]:
-            if y < cur_pos[1]:
-                return "S"
-            elif y > cur_pos[1]:
                 return "N"
+            elif x > cur_pos[0]:
+                return "S"
+        elif y != cur_pos[1]:
+            if y < cur_pos[1]:
+                return "W"
+            elif y > cur_pos[1]:
+                return "E"
         else:
-            raise ValueError("Soooooomething's screwed up")
+            return None
         
-    def connect_pipe(row:int, col:int, cur_pos:tuple):
+    def pipe_connects(row:int, col:int, cur_pos:tuple) -> bool:
         direction = dir_traveled(row, col, cur_pos)
-        nextpos = move_dict[arr[row][col]]
-        if direction in nextpos:
-            return True
+        if isinstance(direction, str):
+            pos_direct = move_dict[arr[row][col]]
+            if (direction == rev_dict[pos_direct[0]]) | (direction == rev_dict[pos_direct[1]]):
+                return True
+            else:
+                return False
         else:
             return False
 
@@ -51,31 +56,43 @@ def problemsolver(arr:list):
         "J":["N","W"],
         "7":["S","W"],
         "F":["S","E"],
-        ".":"",
-        "S":"start"
+        "S":["", ""]
     }
     rev_dict = {
         "N":"S",
         "S":"N",
         "E":"W",
-        "W":"E"
+        "W":"E",
     }
-    start, steps = (2,0), 0
-    #Could count total steps until back at start and divide by 2.  Simple but would work
-    cur_pos = start.copy()
-    for row in range(start[0] - 1, start[0] + 1):
-        for col in range(start[1] - 1, start[1] + 1):
-            if onboard(row, col) & (arr[row][col] != ".") & connect_pipe(row, col, cur_pos):
-                if (row, col) == start:
-                    return steps
-                else:
-                    steps += 1
-
+    start = cur_pos = (2,0)
+    steps = 0
+    last_p = ""
+    stopcount = False
+    while not stopcount:
+        #Only select directions in NSEW
+        for direction in [(1,0), (-1,0), (0, 1), (0, -1)]:
+            row, col = cur_pos[0] + direction[0], cur_pos[1] + direction[1]
+            if onboard(row, col):
+                if (arr[row][col] != ".") & (last_p != (row, col)):
+                    if (row, col) == start:
+                        steps += 1
+                        logger.info(f"steps: {steps}")
+                        stopcount = True
+                    else:
+                        if pipe_connects(row, col, cur_pos):
+                            last_p = cur_pos
+                            cur_pos = (row, col)
+                            steps += 1
+                            logger.info(f"steps: {steps}")
+    
+    return steps // 2
     #1. Check if the next move is on the board
     #2. Check if its anything other than a .
     #3. Check its able to go direction you of available paths
     #4. Check if its at the start (end condition)
     #5. If not, iterate steps and continue
+    #6. Make sures it not where we just came from
+    #Could count total steps until back at start and divide by 2??  Simple but would work
     
 @log_time
 def part_A():
@@ -90,9 +107,10 @@ def part_A():
     #Solve puzzle w/testcase
     testcase = problemsolver(testdata)
     #Assert testcase
-    assert testcase == 8
+    assert testcase == 8, logger.info("Test case passed for part A")
+
     #Solve puzzle with full dataset
-    answerA = "" #problemsolver(data)
+    answerA = problemsolver(data)
     return answerA
 
 @log_time
