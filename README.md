@@ -5,7 +5,7 @@ These are my solutions for the [Advent of Code 2024](https://adventofcode.com/20
 
 ### Setup TODO 
 
-- [ ] Something that captures the output and updates the README? SORCERY :mage: :magic_wand: 
+- [ ] Make a function that captures the output and updates the results table in the README. SORCERY :mage: :magic_wand: 
 - [ ] Make a TUI to view and navigate the leaderboard
 
 

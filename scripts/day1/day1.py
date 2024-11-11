@@ -22,7 +22,7 @@ def part_A():
     #Print the puzzle description to the terminal
     console.log(f"\n{puzzletext}")
     #process/print the testdata
-    testdata = support.process_input(testdata)
+    testdata = support.process_input(testdata, True)
     #TODO - Write solution functions for testcase
     testcase = "duh"
     #Assert the testcase is correct
@@ -30,7 +30,7 @@ def part_A():
     input = support.pull_inputdata(DAY, YEAR)
     #Make data a global for part B.  (easier than passing it)
     global data
-    data = support.process_input(input) #Include False to not split
+    data = support.process_input(input, False) #Include False to not split
     #TODO - Write solution functions for fulldatainput
     return "duh"
 
@@ -44,7 +44,7 @@ def part_B():
     #Print the puzzle description to the terminal
     console.log(f"\n{puzzletext}")
     #process/print the testdata
-    testdata = support.process_input(testdata)
+    testdata = support.process_input(testdata, True)
     #TODO - Write solution functions for testcase
     testcase = "duh"
     #Assert the testcase is correct
@@ -71,9 +71,6 @@ def main():
 
     #Delete the cache after submission
     support._877_cache_now(".cache", True)
-    
-    #TODO - Update README function?
-    #TODO - Leaderboard TUI????
     
 if __name__ == "__main__":
     main()

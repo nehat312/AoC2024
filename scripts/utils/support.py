@@ -257,7 +257,7 @@ def recurse_dir(dir:str = './'):
     return count
 
 #############################  Data Transform Funcs  ########################
-def process_input(textdata:str, split:bool=True)->list:
+def process_input(textdata:str, testd:bool, split:bool=True, )->list:
     """Function to process input datasets.  Both testcase and full datasets
 
     Args:
@@ -272,7 +272,8 @@ def process_input(textdata:str, split:bool=True)->list:
         arr = [x.strip() if x != "" else "" for x in data]
     else:
         arr = [x.strip() if x != "" else "" for x in textdata]
-    [logger.warning(f"{td}") for td in arr]
+    if testd:
+        [logger.warning(f"{td}") for td in arr]
     return arr
 
 
