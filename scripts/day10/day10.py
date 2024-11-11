@@ -42,13 +42,11 @@ def problemsolver(arr:list) -> int:
     def pipe_connects(row:int, col:int, cur_pos:tuple) -> bool:
         direction = dir_traveled(row, col, cur_pos)
         if isinstance(direction, str):
-            cur_pos_dirs = move_dict[arr[cur_pos[0][cur_pos[1]]]]
-            nex_pos_dirs = move_dict[arr[row][col]]
-            #BUG - Problem is here in the directional comparison
-            #I need to make sure the current possible directions match 
-            #the reversed of the next_pos_dirs
-            if (direction == rev_dict[nex_pos_dirs[0]]) | (direction == rev_dict[nex_pos_dirs[1]]):
-                return True
+            cur_pos_dirs = move_dict[arr[cur_pos[0]][cur_pos[1]]]
+            if direction in cur_pos_dirs:
+                nex_pos_dirs = move_dict[arr[row][col]]
+                if (direction == rev_dict[nex_pos_dirs[0]]) | (direction == rev_dict[nex_pos_dirs[1]]):
+                    return True
             else:
                 return False
         else:
@@ -61,7 +59,7 @@ def problemsolver(arr:list) -> int:
         "J":["N","W"],
         "7":["S","W"],
         "F":["S","E"],
-        "S":["", ""]
+        "S":["N", "S", "E", "W"]
     }
     rev_dict = {
         "N":"S",
@@ -87,11 +85,9 @@ def problemsolver(arr:list) -> int:
                     if (row, col) == start:
                         steps += 1
                         stopcount = True
+                        logger.info(f"Final stepcount:{steps}")
+                        break
                     else:
-                        #if the pipe connects, step
-                        if steps == 6:
-                            logger.info(f"pause for the cause")
-
                         if pipe_connects(row, col, cur_pos):
                             went = dir_traveled(row, col, cur_pos)
                             last_p = cur_pos
