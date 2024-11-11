@@ -277,9 +277,9 @@ def process_input(textdata:str, testd:bool, split:bool=True, )->list:
     else:
         arr = [x.strip() if x != "" else "" for x in textdata]
     if testd:
-        console.log("\nFor example\n")
+        console.log("\nSample Data:\n")
         [console.log(f"{td}") for td in arr]
-        console.log("\n\n")
+        console.log("\n")
     return arr
 
 

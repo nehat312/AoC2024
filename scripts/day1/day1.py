@@ -8,7 +8,7 @@ from utils import support
 from datetime import datetime
 
 #Set day/year global variables
-DAY:int = 1 #datetime.now().day
+DAY:int = 2 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
 
 @log_time
