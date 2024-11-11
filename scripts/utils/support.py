@@ -139,7 +139,7 @@ def _877_cache_now(
         logger.critical("cache cleared")
 
 @cache
-def pull_puzzle(day:int, year:int, part:int)-> str:
+def pull_puzzle(day:int, year:int, part:int, tellstory:bool=True)-> str:
     """This function pulls down the puzzle description with requests
 
     Args:
@@ -168,13 +168,12 @@ def pull_puzzle(day:int, year:int, part:int)-> str:
     storytime = subtext.get_text()
     sampledata = subtext.select("pre")[0].text
 
-    #Print the puzzle description to the terminal
     console.log(f"\n{storytime}")
 
     #process the sample data
     sampledata = process_input(sampledata, True) #Include extra False to not split
 
-    return sampledata
+    return storytime, sampledata
 
 @cache
 def pull_inputdata(day:int, year:int)->str:
