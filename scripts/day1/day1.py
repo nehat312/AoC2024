@@ -20,15 +20,18 @@ def part_A():
     #Pull puzzle description and testdata
     testdata = support.pull_puzzle(DAY, YEAR, 1)
     #process/print the testdata
+    #TODO - Move process_input to pull_puzzle func
     testdata = support.process_input(testdata, True)
     #TODO - Write solution functions for testcase and full data input
     testcase = "duh"
     #Assert the testcase is correct
     assert(testcase == "duh")
     input = support.pull_inputdata(DAY, YEAR)
+    #TODO-update above to return data (processed)
     #Make data a global for part B.  (easier than passing it)
     global data
     data = support.process_input(input, False) #Include False to not split
+    #TODO - Move process_input to inputdata func.
     return "duh"
 
 @log_time
@@ -39,6 +42,7 @@ def part_B():
     #Pull puzzle description and testdata
     testdata = support.pull_puzzle(DAY, YEAR, 2)
     #process/print the testdata
+    #TODO - Move process_input to pull_puzzle func
     testdata = support.process_input(testdata, True)
     #TODO - Write solution functions for testcase and full data input
     testcase = "duh"
