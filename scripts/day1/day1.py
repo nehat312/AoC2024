@@ -20,6 +20,7 @@ def part_A():
     #Pull puzzle description and testdata
     testdata = support.pull_puzzle(DAY, YEAR, 1)
     #process/print the testdata
+    #TODO - Move data processing to pullpuzzle func
     testdata = support.process_input(testdata, True)
     #TODO - Write solution functions for testcase and full data input
     testcase = "duh"
@@ -39,6 +40,7 @@ def part_B():
     #Pull puzzle description and testdata
     testdata = support.pull_puzzle(DAY, YEAR, 2)
     #process/print the testdata
+    #TODO - Move data processing to pullpuzzle func
     testdata = support.process_input(testdata, True)
     #TODO - Write solution functions for testcase and full data input
     testcase = "duh"
