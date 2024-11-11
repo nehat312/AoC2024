@@ -166,7 +166,8 @@ def pull_puzzle(day:int, year:int, part:int, tellstory:bool=True)-> str:
     bs4ob = BeautifulSoup(response.text, features="xml")
     subtext = bs4ob.find_all("article")[part - 1]
     storytime = subtext.get_text()
-    sampledata = subtext.select("pre")[0].text
+    #NOTE:Don't forget to change idx below to pull in right sampledata
+    sampledata = subtext.select("pre")[-2].text
 
     console.log(f"\n{storytime}")
 
@@ -200,7 +201,7 @@ def pull_inputdata(day:int, year:int)->str:
         logger.info(f"day {day} input data retrieved")
         #Process the data
         data = process_input(response.text, False) #Include extra False to not split
-        logger.info(f"length of full dataset-> {len(data)}")
+        logger.info(f"Shape of dataset (row,col)-> {len(data), len(data[0])}")
         return data
 
 #############################  Data Transform Funcs  ########################
