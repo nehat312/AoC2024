@@ -3,7 +3,7 @@ import sys
 #Add the dir above day run as path for easy import
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)
-from utils.support import log_time, logger, console, _877_cache_now
+from utils.support import log_time, logger, _877_cache_now
 from utils import support
 from datetime import datetime
 
@@ -21,7 +21,6 @@ def part_A():
     testdata = support.pull_puzzle(DAY, YEAR, 1)
     #TODO - Write solution functions for testdata and full data input
     testcase = "duh"
-    #Assert the testcase is correct
     assert(testcase == "duh")
     global data
     data = support.pull_inputdata(DAY, YEAR)
@@ -36,9 +35,7 @@ def part_B():
     testdata = support.pull_puzzle(DAY, YEAR, 2)
     #TODO - Write solution functions for testdata and full data input
     testcase = "duh"
-    #Assert the testcase is correct
     assert(testcase == "duh")
-
     global data
     logger.info(f"length of full dataset-> {len(data)}")
     return "duh"
@@ -59,7 +56,7 @@ def main():
     logger.info(f"Lines of code \n{LOC}")
 
     #Delete the cache after submission
-    _877_cache_now(".cache", True)
+    _877_cache_now(".cache", False)
     
 if __name__ == "__main__":
     main()
