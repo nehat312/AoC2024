@@ -172,7 +172,7 @@ def pull_puzzle(day:int, year:int, part:int)-> str:
     console.log(f"\n{storytime}")
 
     #process the sample data
-    sampledata = process_input(sampledata, True)
+    sampledata = process_input(sampledata, True) #Include extra False to not split
 
     return sampledata
 
@@ -199,9 +199,31 @@ def pull_inputdata(day:int, year:int)->str:
         return None
     else:
         logger.info(f"day {day} input data retrieved")
-        #Pocess the data
-        data = process_input(response.text, False) #Include False to not split
+        #Process the data
+        data = process_input(response.text, False) #Include extra False to not split
         return data
+
+#############################  Data Transform Funcs  ########################
+def process_input(textdata:str, testd:bool, split:bool=True, )->list:
+    """Function to process input datasets.  Both testcase and full datasets
+
+    Args:
+        textdata (str): Usually one huge string of the input data
+        split (bool, optional): Whether or not you want to newline split the string. Defaults to True.
+
+    Returns:
+        arr (list): List of the dataset
+    """    
+    if split:
+        data = textdata.splitlines()
+        arr = [x.strip() if x != "" else "" for x in data]
+    else:
+        arr = [x.strip() if x != "" else "" for x in textdata]
+    if testd:
+        console.log("\nSample Data:\n")
+        [console.log(f"{td}") for td in arr]
+        console.log("\n")
+    return arr
 
 ################################# submit funcs ##############################
 @cache
@@ -226,6 +248,9 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
         cookies = C_IS_4_COOKIE, 
         timeout = 10
     )
+    #TODO - Keep a configs file that can track when the last posting was and to not post another request within x minutes.  I think he has a minute limit on them but I can't quite remember. 
+        #Either way.  Don't hammer his servers. 
+
     #Be nice to the servers
     if response.status_code != 200:
         # If there's an error, log it and return no data
@@ -235,11 +260,11 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
     else:
         logger.info(f"AOC day {day} successfully submitted :tada:")
         bs4ob = BeautifulSoup(response.text, "xml")
-        console.log(bs4ob.find_all("article")[2].get_text())
+        console.log(bs4ob.find_all("p", _class="day-success")[0].get_text())
 
+#TODO - Test submit function
 #TODO - Create func that can add rows and / or update a markdown table.   or store it in a dataclass.  I'd like it to be able to add new days and update it as I complete sections.  
     #Make it part of a successful submit function
-#TODO - Will need to come back and check this function closer to start of AOC
 
 ################################# Code Line Counter #########################
 def recurse_dir(dir:str = './'):
@@ -265,41 +290,3 @@ def recurse_dir(dir:str = './'):
                         count += 1
 
     return count
-
-#############################  Data Transform Funcs  ########################
-def process_input(textdata:str, testd:bool, split:bool=True, )->list:
-    """Function to process input datasets.  Both testcase and full datasets
-
-    Args:
-        textdata (str): Usually one huge string of the input data
-        split (bool, optional): Whether or not you want to newline split the string. Defaults to True.
-
-    Returns:
-        arr (list): List of the dataset
-    """    
-    if split:
-        data = textdata.splitlines()
-        arr = [x.strip() if x != "" else "" for x in data]
-    else:
-        arr = [x.strip() if x != "" else "" for x in textdata]
-    if testd:
-        console.log("\nSample Data:\n")
-        [console.log(f"{td}") for td in arr]
-        console.log("\n")
-    return arr
-
-
-def date_convert(str_time:str)->datetime:
-    """
-    When Loading the historical data.  Turn all the published dates into
-    datetime objects so they can be sorted in the save routine. 
-
-    Args:
-        str_time (str): Converts a string to a datetime object 
-
-    Returns:
-        dateOb (datetime): str_time as a datetime object
-    """    
-    dateOb = datetime.datetime.strptime(str_time,'%m-%d-%Y-%H-%M-%S')
-    dateOb = np.datetime64(dateOb, "s")
-    return dateOb
