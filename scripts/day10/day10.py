@@ -6,6 +6,7 @@ sys.path.append(root_folder)
 from utils.support import log_time, logger, console, _877_cache_now
 from utils import support
 from datetime import datetime
+from itertools import chain
 
 #Set day/year global variables
 DAY:int = 10 #datetime.now().day
@@ -64,27 +65,34 @@ def problemsolver(arr:list) -> int:
         "E":"W",
         "W":"E",
     }
-    start = cur_pos = (2,0)
+    #Find the start position
+    searchforit = [[(row, col) for col in range(len(arr[0])) if arr[row][col] == "S"] for row in range(len(arr))]
+    start = cur_pos = list(chain(*searchforit))[0]
     steps = 0
     last_p = ""
     stopcount = False
     while not stopcount:
-        #Only select directions in NSEW
+        #Only move in directions N,S,E,W respectively
         for direction in [(1,0), (-1,0), (0, 1), (0, -1)]:
             row, col = cur_pos[0] + direction[0], cur_pos[1] + direction[1]
+            # If the next point is on the board, proceed
             if onboard(row, col):
+                # If the next point isn't a dot and its not the last point
                 if (arr[row][col] != ".") & (last_p != (row, col)):
+                    #End whileloop condition
                     if (row, col) == start:
                         steps += 1
-                        logger.info(f"steps: {steps}")
                         stopcount = True
                     else:
+                        #if the pipe connects, step
                         if pipe_connects(row, col, cur_pos):
                             last_p = cur_pos
                             cur_pos = (row, col)
                             steps += 1
-                            logger.info(f"steps: {steps}")
-    
+                        else:
+                            continue
+
+                        #Need logic to continue here.  Probably source of bug
     return steps // 2
     #1. Check if the next move is on the board
     #2. Check if its anything other than a .
@@ -107,8 +115,8 @@ def part_A():
     #Solve puzzle w/testcase
     testcase = problemsolver(testdata)
     #Assert testcase
-    assert testcase == 8, logger.info("Test case passed for part A")
-
+    assert testcase == 8
+    logger.info("Test case passed for part A")
     #Solve puzzle with full dataset
     answerA = problemsolver(data)
     return answerA
