@@ -19,12 +19,13 @@ def part_A():
     _877_cache_now() #Lol. I blame myself
     #Pull puzzle description and testdata
     testdata = support.pull_puzzle(DAY, YEAR, 1)
-    #TODO - Write solution functions for testdata and full data input
-    testcase = "duh"
-    assert(testcase == "duh")
-    global data
-    data = support.pull_inputdata(DAY, YEAR)
-    return "duh"
+    #Solve puzzle w/testcase
+    testcase = "" #problemsolver(testdata)
+    #Assert testcase
+    assert testcase == ""
+    #Solve puzzle with full dataset
+    answerA = "" #problemsolver(data)
+    return answerA
 
 @log_time
 def part_B():
@@ -33,14 +34,19 @@ def part_B():
     _877_cache_now()
     #Pull puzzle description and testdata
     testdata = support.pull_puzzle(DAY, YEAR, 2)
-    #TODO - Write solution functions for testdata and full data input
-    testcase = "duh"
-    assert(testcase == "duh")
-    global data
+    #Solve puzzle w/testcase
+    testcase = "" #problemsolver(testdata)
+    #Assert testcase
+    assert testcase == ""
+    #Solve puzzle with full dataset
+    answerB = "" #problemsolver(data)
     logger.info(f"length of full dataset-> {len(data)}")
-    return "duh"
+    return answerB
 
 def main():
+    global data
+    data = support.pull_inputdata(DAY, YEAR)
+
     #Solve part A
     resultA = part_A()
     logger.info(f"part A solution: \n{resultA}\n")
