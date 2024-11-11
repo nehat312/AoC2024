@@ -149,7 +149,7 @@ def pull_puzzle(day:int, year:int, part:int):
         part (int): Which part is being solved
 
     Returns:
-        tuple(storytime[str], sampledata[list]): storytime->The text for the puzzle, sampledata->The testcase dataset
+        sampledata[list]: sampledata->The testcase dataset
     """    
     logger.info("pulling puzzle data")
     url = f"{AOC_URL}/{year}/day/{day}"
@@ -168,7 +168,10 @@ def pull_puzzle(day:int, year:int, part:int):
     subtext = bs4ob.find_all("article")[part - 1]
     storytime = subtext.get_text()
     sampledata = subtext.select("pre")[0].text
-    return storytime, sampledata
+    #Print the puzzle description to the terminal
+    console.log(f"\n{storytime}")
+    
+    return sampledata
 
 @cache
 def pull_inputdata(day:int, year:int)->str:

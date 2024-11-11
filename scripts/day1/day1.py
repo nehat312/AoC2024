@@ -18,12 +18,10 @@ def part_A():
     #call J.... G.... WENTWORTH. 
     support._877_cache_now() #Lol. I blame myself
     #Pull puzzle description and testdata
-    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1)
-    #Print the puzzle description to the terminal
-    console.log(f"\n{puzzletext}")
+    testdata = support.pull_puzzle(DAY, YEAR, 1)
     #process/print the testdata
     testdata = support.process_input(testdata, True)
-    #TODO - Write solution functions for testcase
+    #TODO - Write solution functions for testcase and full data input
     testcase = "duh"
     #Assert the testcase is correct
     assert(testcase == "duh")
@@ -31,7 +29,6 @@ def part_A():
     #Make data a global for part B.  (easier than passing it)
     global data
     data = support.process_input(input, False) #Include False to not split
-    #TODO - Write solution functions for fulldatainput
     return "duh"
 
 @log_time
@@ -40,18 +37,15 @@ def part_B():
     #Check cache status
     support._877_cache_now()
     #Pull puzzle description and testdata
-    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2)
-    #Print the puzzle description to the terminal
-    console.log(f"\n{puzzletext}")
+    testdata = support.pull_puzzle(DAY, YEAR, 2)
     #process/print the testdata
     testdata = support.process_input(testdata, True)
-    #TODO - Write solution functions for testcase
+    #TODO - Write solution functions for testcase and full data input
     testcase = "duh"
     #Assert the testcase is correct
     assert(testcase == "duh")
     global data
     logger.info(f"length of full dataset-> {len(data)}")
-    #TODO - Write solution functions for fulldatainput
     return "duh"
 
 def main():
@@ -70,7 +64,7 @@ def main():
     logger.info(f"Lines of code \n{LOC}")
 
     #Delete the cache after submission
-    support._877_cache_now(".cache", True)
+    support._877_cache_now(".cache", False)
     
 if __name__ == "__main__":
     main()
