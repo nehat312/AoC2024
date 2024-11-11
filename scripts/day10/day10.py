@@ -56,8 +56,8 @@ def main():
     # support.submit_answer(DAY, YEAR, 1, resultA)
 
     #Solve part B
-    resultB = part_B()
-    logger.info(f"part B solution: \n{resultB}\n")
+    # resultB = part_B()
+    # logger.info(f"part B solution: \n{resultB}\n")
     # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code

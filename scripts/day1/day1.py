@@ -73,11 +73,3 @@ if __name__ == "__main__":
 ########################################################
 #Notes
 #Part A Notes
-
-#Wow  So.  This is going to require a graph traversal at some point.  But!  we're chasing animals through 
-#pipes now.  Super!  There are two main loops throughout the maze.  We need to discover how many
-#steps it takes to get from start to finish.  
-#Start is defined by S
-#Finish is whe the two paths have the same end pt
-#Use a dict for directions in the pipe. 
-#Will need a way to scan a 1 grid border
