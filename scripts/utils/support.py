@@ -200,6 +200,7 @@ def pull_inputdata(day:int, year:int)->str:
         logger.info(f"day {day} input data retrieved")
         #Process the data
         data = process_input(response.text, False) #Include extra False to not split
+        logger.info(f"length of full dataset-> {len(data)}")
         return data
 
 #############################  Data Transform Funcs  ########################

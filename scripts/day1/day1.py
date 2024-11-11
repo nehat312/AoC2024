@@ -28,7 +28,7 @@ def part_A():
     #Assert testcase
     assert testcase == ""
     #Solve puzzle with full dataset
-    answerA = "Marla" #problemsolver(data)
+    answerA = "" #problemsolver(data)
     return answerA
 
 @log_time
@@ -44,8 +44,7 @@ def part_B():
     #Assert testcase
     assert testcase == ""
     #Solve puzzle with full dataset
-    answerB = "Hooch\nWhat a hitter! :bat: " #problemsolver(data)
-    logger.info(f"length of full dataset-> {len(data)}")
+    answerB = "" #problemsolver(data)
     return answerB
 
 def main():

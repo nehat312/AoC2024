@@ -22,13 +22,13 @@ def part_A():
     _877_cache_now() #Lol. I blame myself
     #Pull puzzle description and testdata
     tellstory, testdata = support.pull_puzzle(DAY, YEAR, 1)
-    # console.log(f"{tellstory}")
+    console.log(f"{tellstory}")
     #Solve puzzle w/testcase
     testcase = "" #problemsolver(testdata)
     #Assert testcase
     assert testcase == ""
     #Solve puzzle with full dataset
-    answerA = "Marla" #problemsolver(data)
+    answerA = "" #problemsolver(data)
     return answerA
 
 @log_time
@@ -44,8 +44,7 @@ def part_B():
     #Assert testcase
     assert testcase == ""
     #Solve puzzle with full dataset
-    answerB = "Hooch\nWhat a hitter! :bat: " #problemsolver(data)
-    logger.info(f"length of full dataset-> {len(data)}")
+    answerB = "" #problemsolver(data)
     return answerB
 
 def main():
@@ -58,8 +57,8 @@ def main():
     # support.submit_answer(DAY, YEAR, 1, resultA)
 
     #Solve part B
-    resultB = part_B()
-    logger.info(f"part B solution: \n{resultB}\n")
+    # resultB = part_B()
+    # logger.info(f"part B solution: \n{resultB}\n")
     # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
