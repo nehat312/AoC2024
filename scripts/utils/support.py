@@ -73,7 +73,6 @@ cache.expire = timedelta(hours=1)
 console = Console()
 logger = get_logger(console)
 
-#TODO - Create func that can add rows and / or update a markdown table.   or store it in a dataclass.  I'd like it to be able to add new days and update it as I complete sections.  
 
 ################################# Timing Funcs ##############################
 def log_time(fn):
@@ -172,6 +171,7 @@ def pull_puzzle(day:int, year:int, part:int)-> str:
     #Print the puzzle description to the terminal
     console.log(f"\n{storytime}")
 
+    #process the sample data
     sampledata = process_input(sampledata, True)
 
     return sampledata
@@ -237,6 +237,8 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
         bs4ob = BeautifulSoup(response.text, "xml")
         console.log(bs4ob.find_all("article")[2].get_text())
 
+#TODO - Create func that can add rows and / or update a markdown table.   or store it in a dataclass.  I'd like it to be able to add new days and update it as I complete sections.  
+    #Make it part of a successful submit function
 #TODO - Will need to come back and check this function closer to start of AOC
 
 ################################# Code Line Counter #########################
