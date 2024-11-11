@@ -172,6 +172,8 @@ def pull_puzzle(day:int, year:int, part:int)-> str:
     #Print the puzzle description to the terminal
     console.log(f"\n{storytime}")
 
+    sampledata = process_input(sampledata, True)
+
     return sampledata
 
 @cache
@@ -197,7 +199,9 @@ def pull_inputdata(day:int, year:int)->str:
         return None
     else:
         logger.info(f"day {day} input data retrieved")
-        return response.text
+        #Pocess the data
+        data = process_input(response.text, False) #Include False to not split
+        return data
 
 ################################# submit funcs ##############################
 @cache

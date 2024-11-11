@@ -18,20 +18,13 @@ def part_A():
     #call J.... G.... WENTWORTH. 
     support._877_cache_now() #Lol. I blame myself
     #Pull puzzle description and testdata
-    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 1)
-    #Print the puzzle description to the terminal
-    console.log(f"\n{puzzletext}")
-    #process/print the testdata
-    testdata = support.process_input(testdata)
-    #TODO - Write solution functions for testcase
+    testdata = support.pull_puzzle(DAY, YEAR, 1)
+    #TODO - Write solution functions for testdata and full data input
     testcase = "duh"
     #Assert the testcase is correct
     assert(testcase == "duh")
-    input = support.pull_inputdata(DAY, YEAR)
-    #Make data a global for part B.  (easier than passing it)
     global data
-    data = support.process_input(input) #Include False to not split
-    #TODO - Write solution functions for fulldatainput
+    data = support.pull_inputdata(DAY, YEAR)
     return "duh"
 
 @log_time
@@ -40,18 +33,14 @@ def part_B():
     #Check cache status
     support._877_cache_now()
     #Pull puzzle description and testdata
-    puzzletext, testdata = support.pull_puzzle(DAY, YEAR, 2)
-    #Print the puzzle description to the terminal
-    console.log(f"\n{puzzletext}")
-    #process/print the testdata
-    testdata = support.process_input(testdata)
-    #TODO - Write solution functions for testcase
+    testdata = support.pull_puzzle(DAY, YEAR, 2)
+    #TODO - Write solution functions for testdata and full data input
     testcase = "duh"
     #Assert the testcase is correct
     assert(testcase == "duh")
+
     global data
     logger.info(f"length of full dataset-> {len(data)}")
-    #TODO - Write solution functions for fulldatainput
     return "duh"
 
 def main():
@@ -71,9 +60,6 @@ def main():
 
     #Delete the cache after submission
     support._877_cache_now(".cache", True)
-    
-    #TODO - Update README function?
-    #TODO - Leaderboard TUI????
     
 if __name__ == "__main__":
     main()
