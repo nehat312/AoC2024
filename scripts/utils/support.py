@@ -20,6 +20,9 @@ with open("./secret/cookie.txt", "r") as f:
 cache = percache.Cache(".cache", livesync=True)
 cache.expire = timedelta(hours=1)
 
+#TODO - Create func that can add rows and / or update a markdown table.   or store it in a dataclass.  I'd like it to be able to add new days and update it as I complete sections.  
+
+
 ################################# Timing Funcs ##############################
 def log_time(fn):
     """
@@ -124,7 +127,7 @@ def pull_inputdata(day:int, year:int)->str:
         year (int): Year of AOC
 
     Returns:
-        reasponse.text (str): the dataset in string form
+        response.text (str): the dataset in string form
     """
     logger.info("pulling input data")
     url = f"{AOC_URL}/{year}/day/{day}/input"
