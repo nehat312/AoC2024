@@ -7,12 +7,37 @@ from utils.support import log_time, logger, console, _877_cache_now
 from utils import support
 from datetime import datetime
 from itertools import chain
+from collections import deque
+
+#Global vars
 
 #Set day/year global variables
 DAY:int = 10 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
-    
-def problemsolver(arr:list) -> int:
+MOVE_DICT = {
+    "|":["N","S"],
+    "-":["E","W"],
+    "L":["N","E"],
+    "J":["N","W"],
+    "7":["S","W"],
+    "F":["S","E"],
+    ".":[""],
+    "S":[""]
+}
+REV_DICT = {
+    "N":"S",
+    "S":"N",
+    "E":"W",
+    "W":"E",
+}
+DIR_DICT = {
+    "N":"^",
+    "S":"v",
+    "E":">",
+    "W":"<",
+}
+
+def problemsolver(arr:list, part:str) -> int:
     def onboard(x:int, y:int) -> bool:
         height, width  = len(arr), len(arr[0])
         if (x < 0) | (x >= height):
@@ -45,54 +70,51 @@ def problemsolver(arr:list) -> int:
             row, col = cur_pos[0] + direction[0], cur_pos[1] + direction[1]
             if onboard(row, col):
                 #Is the opposite of the move we're making...  in the next cells possibles?
-                move = rev_dict[dir_traveled(row, col, cur_pos)]
+                move = REV_DICT[dir_traveled(row, col, cur_pos)]
                 #Does that next cell have a connecting pipe
-                possibles = move_dict[arr[row][col]]
+                possibles = MOVE_DICT[arr[row][col]]
                 if move in possibles:
-                    start_shape.append(rev_dict[move])
+                    start_shape.append(REV_DICT[move])
         
-        for key, vals in move_dict.items():
+        for key, vals in MOVE_DICT.items():
             if start_shape == vals:
                 return key
 
     def pipe_connects(row:int, col:int, cur_pos:tuple, direct:str) -> bool:
         #Grab the reverse of the direction we're moving.  
-        revmove = rev_dict[direct]
+        revmove = REV_DICT[direct]
         #See if its that direction is in that next cell
-        nex_pos_dirs = move_dict[arr[row][col]]
+        nex_pos_dirs = MOVE_DICT[arr[row][col]]
         #Get the directions of the current position
-        cur_dirs = move_dict[arr[cur_pos[0]][cur_pos[1]]]
-
+        cur_dirs = MOVE_DICT[arr[cur_pos[0]][cur_pos[1]]]
         if (direct in cur_dirs) & (revmove in nex_pos_dirs):
             return True
         else:
             return False
 
-    move_dict = {
-        "|":["N","S"],
-        "-":["E","W"],
-        "L":["N","E"],
-        "J":["N","W"],
-        "7":["S","W"],
-        "F":["S","E"],
-        ".":[""],
-        "S":[""]
-    }
-    rev_dict = {
-        "N":"S",
-        "S":"N",
-        "E":"W",
-        "W":"E",
-    }
+    def chi_town_loop():
+        pass
+
+    def print_pathtaken(pathtaken:list):
+        temparr = ["".join("O" for y in range(len(arr[0]))) for x in range(len(arr))]
+        pathpile = deque(pathtaken)
+        pathpile[0] = (pathpile[0], "S")
+        while pathpile:
+            cp, direct = pathpile.popleft()
+            row = cp[0]
+            col = cp[1]
+            temparr[row] = temparr[row][:col] + direct + temparr[row][col+1:]
+        console.log(temparr)
+
     #Find the start position
     searchforstart = [[(row, col) for col in range(len(arr[0])) if arr[row][col] == "S"] for row in range(len(arr))]
     start = cur_pos = list(chain(*searchforstart))[0]
     steps = 0
-    last_p = ""
+    last_p, pathtaken = "", [start]
     directions = [(1,0), (-1,0), (0, 1), (0, -1)]
     start_block = scan_start_block(directions)
-    move_dict["S"] = move_dict[start_block]
-    [logger.info(f"{key}:{val}") for key, val in move_dict.items()]
+    MOVE_DICT["S"] = MOVE_DICT[start_block]
+    [logger.info(f"{key}:{val}") for key, val in MOVE_DICT.items()]
     stopcount = False
     while not stopcount:
         #Only move in directions N,S,E,W respectively
@@ -108,23 +130,24 @@ def problemsolver(arr:list) -> int:
                         last_p = cur_pos
                         cur_pos = (row, col)
                         steps += 1
-                        if steps == 5:
-                            #BUG - Start here tomorrow
-                            logger.info("pause for the cause")
+                        if part == "B":
+                            pathtaken.append((cur_pos, DIR_DICT[went]))
                         # logger.info(f"went {went} from:{last_p} to {cur_pos} -> stepcount:{steps} ")
                         #Check if its the start
                         if (row, col) == start:
                             stopcount = True
 
     logger.info(f"Final stepcount:{steps}")
-    return steps // 2
-    #1. Check if the next move is on the board
-    #2. Check if its anything other than a .
-    #3. Check its able to go direction you of available paths
-    #4. Check if its at the start (end condition)
-    #5. If not, iterate steps and continue
-    #6. Make sures it not where we just came from
-    #Could count total steps until back at start and divide by 2??  Simple but would work
+
+    if part == "A":
+        return steps // 2
+    if part == "B":
+        #Call how many in the loop function
+        print_pathtaken(pathtaken)
+        innerblocks = chi_town_loop(pathtaken)
+        if not innerblocks:
+            innerblocks = [1, 2, 3]
+        return sum(innerblocks)
     
 @log_time
 def part_A():
@@ -137,13 +160,13 @@ def part_A():
     # console.log(f"{tellstory}")
     # [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
-    testcase = problemsolver(testdata)
+    testcase = problemsolver(testdata, "A")
     #Assert testcase
     assert testcase == 8
     logger.info("Test case passed for part A")
     #Solve puzzle with full dataset
     # [console.log(f"{idx}:{row}") for idx, row in enumerate(data)]
-    answerA = problemsolver(data)
+    answerA = problemsolver(data, "A")
     return answerA
 
 @log_time
@@ -154,10 +177,11 @@ def part_B():
     #Pull puzzle description and testdata
     tellstory, testdata = support.pull_puzzle(DAY, YEAR, 2)
     # console.log(f"{tellstory}")
+    [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
-    testcase = "" #problemsolver(testdata)
+    testcase = problemsolver(testdata, "B")
     #Assert testcase
-    assert testcase == ""
+    assert testcase == 10
     #Solve puzzle with full dataset
     answerB = "" #problemsolver(data)
     return answerB
@@ -169,11 +193,11 @@ def main():
     #Solve part A
     resultA = part_A()
     logger.info(f"part A solution: \n{resultA}\n")
-    support.submit_answer(DAY, YEAR, 1, resultA)
+    # support.submit_answer(DAY, YEAR, 1, resultA)
 
     #Solve part B
-    # resultB = part_B()
-    # logger.info(f"part B solution: \n{resultB}\n")
+    resultB = part_B()
+    logger.info(f"part B solution: \n{resultB}\n")
     # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
@@ -195,4 +219,12 @@ if __name__ == "__main__":
 #We need to discover how many steps it takes to get from start to finish.  
 #Start is defined by S Finish is when the two paths have the same end pt.
 #Use a dict for directions in the pipe. 
-#Will need a way to scan a 1 grid border
+#1. Check if the next move is on the board
+#2. Check if its anything other than a .
+#3. Check its able to go direction you of available paths
+#4. Check if its at the start (end condition)
+#5. If not, iterate steps and continue
+#6. Make sures it not where we just came from
+#Could count total steps until back at start and divide by 2??  Simple but would work
+
+#Part B Notes

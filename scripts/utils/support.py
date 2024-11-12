@@ -167,12 +167,11 @@ def pull_puzzle(day:int, year:int, part:int, tellstory:bool=True)-> str:
     subtext = bs4ob.find_all("article")[part - 1]
     storytime = subtext.get_text()
     #NOTE:Don't forget to change idx below to pull in right sampledata
-    sampledata = subtext.select("pre")[-2].text
-
+    sampledata = subtext.select("pre")[-3].text
     console.log(f"\n{storytime}")
 
     #process the sample data
-    sampledata = process_input(sampledata, True) #Include extra False to not split
+    sampledata = process_input(sampledata, tellstory) #Include extra False to not split
 
     return storytime, sampledata
 
@@ -205,7 +204,7 @@ def pull_inputdata(day:int, year:int)->str:
         return data
 
 #############################  Data Transform Funcs  ########################
-def process_input(textdata:str, testd:bool, split:bool=True, )->list:
+def process_input(textdata:str, testd:bool, split:bool=True)->list:
     """Function to process input datasets.  Both testcase and full datasets
 
     Args:

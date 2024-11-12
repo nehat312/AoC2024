@@ -23,6 +23,7 @@ def part_A():
     #Pull puzzle description and testdata
     tellstory, testdata = support.pull_puzzle(DAY, YEAR, 1)
     # console.log(f"{tellstory}")
+    # [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
     testcase = "" #problemsolver(testdata)
     #Assert testcase
@@ -39,6 +40,7 @@ def part_B():
     #Pull puzzle description and testdata
     tellstory, testdata = support.pull_puzzle(DAY, YEAR, 2)
     # console.log(f"{tellstory}")
+    # [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
     testcase = "" #problemsolver(testdata)
     #Assert testcase
