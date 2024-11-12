@@ -11,7 +11,6 @@ from itertools import chain
 #Set day/year global variables
 DAY:int = 10 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
-
     
 def problemsolver(arr:list) -> int:
     def onboard(x:int, y:int) -> bool:
@@ -57,13 +56,15 @@ def problemsolver(arr:list) -> int:
                 return key
 
     def pipe_connects(row:int, col:int, cur_pos:tuple, direct:str) -> bool:
-        if isinstance(direct, str):
-            move = rev_dict[direct]
-            nex_pos_dirs = move_dict[arr[row][col]]
-            if move in nex_pos_dirs:
-                return True
-            else:
-                return False
+        #Grab the reverse of the direction we're moving.  
+        revmove = rev_dict[direct]
+        #See if its that direction is in that next cell
+        nex_pos_dirs = move_dict[arr[row][col]]
+        #Get the directions of the current position
+        cur_dirs = move_dict[arr[cur_pos[0]][cur_pos[1]]]
+
+        if (direct in cur_dirs) & (revmove in nex_pos_dirs):
+            return True
         else:
             return False
 
@@ -107,10 +108,10 @@ def problemsolver(arr:list) -> int:
                         last_p = cur_pos
                         cur_pos = (row, col)
                         steps += 1
-                        if steps == 7:
+                        if steps == 5:
                             #BUG - Start here tomorrow
                             logger.info("pause for the cause")
-                        logger.info(f"stepcount:{steps} from:{last_p} to {cur_pos} -> {went}")
+                        # logger.info(f"went {went} from:{last_p} to {cur_pos} -> stepcount:{steps} ")
                         #Check if its the start
                         if (row, col) == start:
                             stopcount = True
