@@ -169,7 +169,7 @@ def main():
     #Solve part A
     resultA = part_A()
     logger.info(f"part A solution: \n{resultA}\n")
-    # support.submit_answer(DAY, YEAR, 1, resultA)
+    support.submit_answer(DAY, YEAR, 1, resultA)
 
     #Solve part B
     # resultB = part_B()

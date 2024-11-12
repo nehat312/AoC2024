@@ -64,7 +64,7 @@ def get_rich_handler(console:Console) -> RichHandler:
     return rh
 
 ################################ Global Vars ##############################
-AOC_URL = "https://www.adventofcode.com"
+AOC_URL = "https://adventofcode.com"
 with open("./secret/cookie.txt", "r") as f:
     C_IS_4_COOKIE = {"session":f.readline()}
 
@@ -251,7 +251,6 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
     )
     #TODO - Keep a configs file that can track when the last posting was and to not post another request within x minutes.  I think he has a minute limit on them but I can't quite remember. 
         #Either way.  Don't hammer his servers. 
-
     #Be nice to the servers
     if response.status_code != 200:
         # If there's an error, log it and return no data
@@ -259,11 +258,26 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
         logger.warning(f'Reason: {response.text}')
         return
     else:
-        logger.info(f"AOC day {day} successfully submitted :tada:")
+        logger.info(f"POST successful for {day}")
+        logger.info("Determining answer")
         bs4ob = BeautifulSoup(response.text, "xml")
-        console.log(bs4ob.find_all("p", _class="day-success")[0].get_text())
+        possiblygood = ["That's the right answer", "You don't seem to be solving the right level"]
+        temp = bs4ob.find_all("p")
+        for val in temp:
+            if val.text.startswith(possiblygood[0]):
+                success = bs4ob.find("span", _class="day-success")
+                part2link = bs4ob.find("a").get("href")
+                logger.info("Answer Correct!")
+                logger.info(success.get_text())
+                logger.info(f"Click for part 2 {part2link}")
+                break
+            elif val.text.startswith(possiblygood[1]):
+                logger.info("Answer already submitted")
+                break
+            else:
+                #TODO - Write custom error message that returns the high or low from answer on the site. 
+                logger.info("Answer incorrect or couldn't find evidence of answer")
 
-#TODO - Test submit function
 #TODO - Create func that can add rows and / or update a markdown table.   or store it in a dataclass.  I'd like it to be able to add new days and update it as I complete sections.  
     #Make it part of a successful submit function
 
