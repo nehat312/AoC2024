@@ -11,7 +11,7 @@ from datetime import datetime
 DAY:int = 1 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
 
-# def problemsolver(arr:list):
+# def problemsolver(arr:list, part:int):
 #     pass
 
 @log_time
@@ -25,11 +25,11 @@ def part_A():
     # console.log(f"{tellstory}")
     # [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
-    testcase = "" #problemsolver(testdata)
+    testcase = "" #problemsolver(testdata, 1)
     #Assert testcase
-    assert testcase == ""
+    assert testcase == "", "Test case A failed"
     #Solve puzzle with full dataset
-    answerA = "" #problemsolver(data)
+    answerA = "" #problemsolver(data, 1)
     return answerA
 
 @log_time
@@ -42,11 +42,11 @@ def part_B():
     # console.log(f"{tellstory}")
     # [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
-    testcase = "" #problemsolver(testdata)
+    testcase = "" #problemsolver(testdata, 2)
     #Assert testcase
-    assert testcase == ""
+    assert testcase == "", "Test case B failed"
     #Solve puzzle with full dataset
-    answerB = "" #problemsolver(data)
+    answerB = "" #problemsolver(data, 2)
     return answerB
 
 def main():

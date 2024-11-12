@@ -37,7 +37,7 @@ DIR_DICT = {
     "W":"<",
 }
 
-def problemsolver(arr:list, part:str) -> int:
+def problemsolver(arr:list, part:int) -> int:
     def onboard(x:int, y:int) -> bool:
         height, width  = len(arr), len(arr[0])
         if (x < 0) | (x >= height):
@@ -92,10 +92,7 @@ def problemsolver(arr:list, part:str) -> int:
         else:
             return False
 
-    def chi_town_loop():
-        pass
-
-    def print_pathtaken(pathtaken:list):
+    def print_path_taken(pathtaken:list):
         temparr = ["".join("." for y in range(len(arr[0]))) for x in range(len(arr))]
         pathpile = deque(pathtaken)
         while pathpile:
@@ -105,15 +102,57 @@ def problemsolver(arr:list, part:str) -> int:
             temparr[row] = temparr[row][:col] + direct + temparr[row][col+1:]
         console.log(temparr)
 
+    def chi_town_loop(pathtaken):
+        #idea.  For each location in the grid. 
+        #Check if it has a path on all 4 sides. 
+            #(But check from the perimeter looking in)  Not from the point looking out
+        #If it has all 4, maybe its in the loop?
+        #Kinda like the tree canopy problem from a few years ago
+        #howto
+            #Generate all grid point combinations.
+            #set intersect the path locations out
+            #Check each of the rest for if it has path vars in each direction?
+        length = len(arr) 
+        width = len(arr[0])
+
+        def pathalldir(point:tuple, pathpoints:list, arr:list):
+            for direction in DIR_DICT.keys():
+                if direction == "N":
+                    points_in_range = [(x, point[1]) for x in range(0, point[0])]
+                elif direction == "S":
+                    points_in_range = [(x, point[1]) for x in range(point[0], length)]
+                elif direction == "E":
+                    points_in_range = [(point[0], x) for x in range(point[1], width)]
+                elif direction == "W":
+                    points_in_range = [(point[0], x) for x in range(0, point[1])]
+
+                if set(points_in_range) & set(pathpoints):
+                    continue
+                else:
+                    return False
+            return True
+        allpoints = [[(x, y) for y in range(len(arr[0]))] for x in range(len(arr))]
+        allpoints = list(chain(*allpoints))
+        pathpoints = list(map(lambda x:x[0], pathtaken))
+        points_minus_path = set(allpoints).difference(pathpoints)
+        pointpile = deque(points_minus_path)
+        res = []
+        while pointpile:
+            point = pointpile.popleft()
+            #If a point has pathpoint in every direction, add it to the list
+            if pathalldir(point, pathpoints, arr):
+                res.append(point)
+        return res
+      
     #Find the start position
     searchforstart = [[(row, col) for col in range(len(arr[0])) if arr[row][col] == "S"] for row in range(len(arr))]
     start = cur_pos = list(chain(*searchforstart))[0]
     steps = 0
     last_p, pathtaken = "", [(start, "S")]
-    directions = [(1,0), (-1,0), (0, 1), (0, -1)]
+    directions = [(1,0), (-1,0), (0, 1), (0,-1)]
     start_block = scan_start_block(directions)
     MOVE_DICT["S"] = MOVE_DICT[start_block]
-    [logger.info(f"{key}:{val}") for key, val in MOVE_DICT.items()]
+    # [logger.info(f"{key}:{val}") for key, val in MOVE_DICT.items()]
     stopcount = False
     while not stopcount:
         #Only move in directions N,S,E,W respectively
@@ -129,7 +168,7 @@ def problemsolver(arr:list, part:str) -> int:
                         last_p = cur_pos
                         cur_pos = (row, col)
                         steps += 1
-                        if part == "B":
+                        if part == 2:
                             if not (row, col) == start:
                                 pathtaken.append((cur_pos, DIR_DICT[went]))
                         # logger.info(f"went {went} from:{last_p} to {cur_pos} -> stepcount:{steps} ")
@@ -139,19 +178,19 @@ def problemsolver(arr:list, part:str) -> int:
 
     logger.info(f"Final stepcount:{steps}")
 
-    if part == "A":
+    if part == 1:
         return steps // 2
-    if part == "B":
+    if part == 2:
         #Call how many in the loop function
-        print_pathtaken(pathtaken)
+        print_path_taken(pathtaken)
         innerblocks = chi_town_loop(pathtaken)
-        if not innerblocks:
-            innerblocks = [1, 2, 3]
-        return sum(innerblocks)
-    
+        if innerblocks:
+            return sum(innerblocks)
+        else:
+            raise ValueError("Something broke~!!!")
 @log_time
 def part_A():
-    logger.info("Solving part A")
+    logger.info("Solving part 1")
     #to check your cache status when you need cache nooooow
     #call J.... G.... WENTWORTH. 
     _877_cache_now() #Lol. I blame myself
@@ -160,13 +199,13 @@ def part_A():
     # console.log(f"{tellstory}")
     # [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
-    testcase = problemsolver(testdata, "A")
+    testcase = problemsolver(testdata, 1)
     #Assert testcase
-    assert testcase == 8
-    logger.info("Test case passed for part A")
+    assert testcase == 8, "Test case failed"
+    logger.info("Test case passed for part 1")
     #Solve puzzle with full dataset
     # [console.log(f"{idx}:{row}") for idx, row in enumerate(data)]
-    answerA = problemsolver(data, "A")
+    answerA = problemsolver(data, 1)
     return answerA
 
 @log_time
@@ -177,13 +216,13 @@ def part_B():
     #Pull puzzle description and testdata
     tellstory, testdata = support.pull_puzzle(DAY, YEAR, 2)
     # console.log(f"{tellstory}")
-    [logger.info(row) for row in testdata]
+    # [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
-    testcase = problemsolver(testdata, "B")
+    testcase = problemsolver(testdata, 2)
     #Assert testcase
-    assert testcase == 10
+    assert testcase == 10, "Test case failed"
     #Solve puzzle with full dataset
-    answerB = "" #problemsolver(data)
+    answerB = "" #problemsolver(data, 2)
     return answerB
 
 def main():
@@ -228,3 +267,9 @@ if __name__ == "__main__":
 #Could count total steps until back at start and divide by 2??  Simple but would work
 
 #Part B Notes
+
+#We suspect there is a nest within the pipe maze they may be hiding in.  Our job now
+#is to count the spaces that are contained within the traversal path.  How the hell
+#Options
+    #1. Could widen the area of the grid and make up a function to test if its part of the loop
+    #2. Make a func that can scan for the nearest period in every direction? 
