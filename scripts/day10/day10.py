@@ -96,9 +96,8 @@ def problemsolver(arr:list, part:str) -> int:
         pass
 
     def print_pathtaken(pathtaken:list):
-        temparr = ["".join("O" for y in range(len(arr[0]))) for x in range(len(arr))]
+        temparr = ["".join("." for y in range(len(arr[0]))) for x in range(len(arr))]
         pathpile = deque(pathtaken)
-        pathpile[0] = (pathpile[0], "S")
         while pathpile:
             cp, direct = pathpile.popleft()
             row = cp[0]
@@ -110,7 +109,7 @@ def problemsolver(arr:list, part:str) -> int:
     searchforstart = [[(row, col) for col in range(len(arr[0])) if arr[row][col] == "S"] for row in range(len(arr))]
     start = cur_pos = list(chain(*searchforstart))[0]
     steps = 0
-    last_p, pathtaken = "", [start]
+    last_p, pathtaken = "", [(start, "S")]
     directions = [(1,0), (-1,0), (0, 1), (0, -1)]
     start_block = scan_start_block(directions)
     MOVE_DICT["S"] = MOVE_DICT[start_block]
@@ -131,7 +130,8 @@ def problemsolver(arr:list, part:str) -> int:
                         cur_pos = (row, col)
                         steps += 1
                         if part == "B":
-                            pathtaken.append((cur_pos, DIR_DICT[went]))
+                            if not (row, col) == start:
+                                pathtaken.append((cur_pos, DIR_DICT[went]))
                         # logger.info(f"went {went} from:{last_p} to {cur_pos} -> stepcount:{steps} ")
                         #Check if its the start
                         if (row, col) == start:

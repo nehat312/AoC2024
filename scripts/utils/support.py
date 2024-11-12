@@ -166,8 +166,11 @@ def pull_puzzle(day:int, year:int, part:int, tellstory:bool=True)-> str:
     bs4ob = BeautifulSoup(response.text, features="xml")
     subtext = bs4ob.find_all("article")[part - 1]
     storytime = subtext.get_text()
-    #NOTE:Don't forget to change idx below to pull in right sampledata
-    sampledata = subtext.select("pre")[-3].text
+    if part == 1:
+        sampledata = subtext.select("pre")[-2].text
+    elif part == 2:
+        sampledata = subtext.select("pre")[-3].text
+
     console.log(f"\n{storytime}")
 
     #process the sample data
