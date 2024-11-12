@@ -11,7 +11,7 @@ from datetime import datetime
 DAY:int = 1 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
 
-# def problemsolver(inputdata:list):
+# def problemsolver(arr:list):
 #     pass
 
 @log_time

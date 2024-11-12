@@ -39,13 +39,29 @@ def problemsolver(arr:list) -> int:
         else:
             return None
         
-    def pipe_connects(row:int, col:int, cur_pos:tuple) -> bool:
-        direction = dir_traveled(row, col, cur_pos)
-        if isinstance(direction, str):
+    def scan_start_block(directions:list):
+        #Determine start shape by looking at surrounding connections
+        start_shape = []
+        for direction in directions:
+            row, col = cur_pos[0] + direction[0], cur_pos[1] + direction[1]
+            if onboard(row, col):
+                #Is the opposite of the move we're making...  in the next cells possibles?
+                move = rev_dict[dir_traveled(row, col, cur_pos)]
+                #Does that next cell have a connecting pipe
+                possibles = move_dict[arr[row][col]]
+                if move in possibles:
+                    start_shape.append(rev_dict[move])
+        
+        for key, vals in move_dict.items():
+            if start_shape == vals:
+                return key
+        
+    def pipe_connects(row:int, col:int, cur_pos:tuple, direct:str) -> bool:
+        if isinstance(direct, str):
             cur_pos_dirs = move_dict[arr[cur_pos[0]][cur_pos[1]]]
-            if direction in cur_pos_dirs:
+            if direct in cur_pos_dirs:
                 nex_pos_dirs = move_dict[arr[row][col]]
-                if (direction == rev_dict[nex_pos_dirs[0]]) | (direction == rev_dict[nex_pos_dirs[1]]):
+                if (direct == rev_dict[nex_pos_dirs[0]]) | (direct == rev_dict[nex_pos_dirs[1]]):
                     return True
             else:
                 return False
@@ -59,7 +75,8 @@ def problemsolver(arr:list) -> int:
         "J":["N","W"],
         "7":["S","W"],
         "F":["S","E"],
-        "S":["N", "S", "E", "W"]
+        ".":[""],
+        "S":[""]
     }
     rev_dict = {
         "N":"S",
@@ -72,30 +89,38 @@ def problemsolver(arr:list) -> int:
     start = cur_pos = list(chain(*searchforstart))[0]
     steps = 0
     last_p = ""
+    directions = [(1,0), (-1,0), (0, 1), (0, -1)]
+    start_block = scan_start_block(directions)
+    move_dict["S"] = move_dict[start_block]
+    [logger.info(f"{key}:{val}") for key, val in move_dict.items()]
     stopcount = False
     while not stopcount:
         #Only move in directions N,S,E,W respectively
-        for direction in [(1,0), (-1,0), (0, 1), (0, -1)]:
+        for direction in directions:
             row, col = cur_pos[0] + direction[0], cur_pos[1] + direction[1]
-            # If the next point is on the board, proceed
+            #If the next point is on the board, proceed
             if onboard(row, col):
-                # If the next point isn't a dot and its not the last point
+                went = dir_traveled(row, col, cur_pos)
+                #If the next point isn't a dot and its not the last point
                 if (arr[row][col] != ".") & (last_p != (row, col)):
-                    #End whileloop condition
-                    if (row, col) == start:
+                    #Check if the pipe connects
+                    if pipe_connects(row, col, cur_pos, went):
+                        last_p = cur_pos
+                        cur_pos = (row, col)
                         steps += 1
-                        stopcount = True
-                        logger.info(f"Final stepcount:{steps}")
-                        break
+                        if steps == 11:
+                            logger.info("pause for the cause")
+                            logger.info(f"stepcount:{steps} from:{last_p} to {cur_pos} -> {went}")
                     else:
-                        if pipe_connects(row, col, cur_pos):
-                            went = dir_traveled(row, col, cur_pos)
+                        #Check if its the start
+                        if (row, col) == start:
                             last_p = cur_pos
                             cur_pos = (row, col)
                             steps += 1
                             logger.info(f"stepcount:{steps} from:{last_p} to {cur_pos} -> {went}")
+                            stopcount = True
 
-                        #Need logic to continue here.  Probably source of bug
+    logger.info(f"Final stepcount:{steps}")
     return steps // 2
     #1. Check if the next move is on the board
     #2. Check if its anything other than a .
@@ -121,6 +146,7 @@ def part_A():
     assert testcase == 8
     logger.info("Test case passed for part A")
     #Solve puzzle with full dataset
+    # [console.log(f"{idx}:{row}") for idx, row in enumerate(data)]
     answerA = problemsolver(data)
     return answerA
 
