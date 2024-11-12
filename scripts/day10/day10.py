@@ -55,14 +55,13 @@ def problemsolver(arr:list) -> int:
         for key, vals in move_dict.items():
             if start_shape == vals:
                 return key
-        
+
     def pipe_connects(row:int, col:int, cur_pos:tuple, direct:str) -> bool:
         if isinstance(direct, str):
-            cur_pos_dirs = move_dict[arr[cur_pos[0]][cur_pos[1]]]
-            if direct in cur_pos_dirs:
-                nex_pos_dirs = move_dict[arr[row][col]]
-                if (direct == rev_dict[nex_pos_dirs[0]]) | (direct == rev_dict[nex_pos_dirs[1]]):
-                    return True
+            move = rev_dict[direct]
+            nex_pos_dirs = move_dict[arr[row][col]]
+            if move in nex_pos_dirs:
+                return True
             else:
                 return False
         else:
@@ -108,16 +107,12 @@ def problemsolver(arr:list) -> int:
                         last_p = cur_pos
                         cur_pos = (row, col)
                         steps += 1
-                        if steps == 11:
+                        if steps == 7:
+                            #BUG - Start here tomorrow
                             logger.info("pause for the cause")
-                            logger.info(f"stepcount:{steps} from:{last_p} to {cur_pos} -> {went}")
-                    else:
+                        logger.info(f"stepcount:{steps} from:{last_p} to {cur_pos} -> {went}")
                         #Check if its the start
                         if (row, col) == start:
-                            last_p = cur_pos
-                            cur_pos = (row, col)
-                            steps += 1
-                            logger.info(f"stepcount:{steps} from:{last_p} to {cur_pos} -> {went}")
                             stopcount = True
 
     logger.info(f"Final stepcount:{steps}")
