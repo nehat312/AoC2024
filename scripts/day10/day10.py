@@ -10,7 +10,6 @@ from itertools import chain
 from collections import deque
 
 #Global vars
-
 #Set day/year global variables
 DAY:int = 10 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
@@ -92,30 +91,27 @@ def problemsolver(arr:list, part:int) -> int:
         else:
             return False
 
-    def print_path_taken(pathtaken:list):
+    def print_path_taken(pathtaken:list, point:tuple=None):
         temparr = ["".join("." for y in range(len(arr[0]))) for x in range(len(arr))]
         pathpile = deque(pathtaken)
+        if point:
+            row = point[0]
+            col = point[1]
+            temparr[row] = temparr[row][:col] + "B" + temparr[row][col+1:]
+
         while pathpile:
             cp, direct = pathpile.popleft()
             row = cp[0]
             col = cp[1]
             temparr[row] = temparr[row][:col] + direct + temparr[row][col+1:]
+
         console.log(temparr)
 
     def chi_town_loop(pathtaken):
-        #idea.  For each location in the grid. 
-        #Check if it has a path on all 4 sides. 
-            #(But check from the perimeter looking in)  Not from the point looking out
-        #If it has all 4, maybe its in the loop?
-        #Kinda like the tree canopy problem from a few years ago
-        #howto
-            #Generate all grid point combinations.
-            #set intersect the path locations out
-            #Check each of the rest for if it has path vars in each direction?
         length = len(arr) 
         width = len(arr[0])
 
-        def pathalldir(point:tuple, pathpoints:list, arr:list):
+        def pathalldir(point:tuple, pathpoints:list):
             for direction in DIR_DICT.keys():
                 if direction == "N":
                     points_in_range = [(x, point[1]) for x in range(0, point[0])]
@@ -125,12 +121,12 @@ def problemsolver(arr:list, part:int) -> int:
                     points_in_range = [(point[0], x) for x in range(point[1], width)]
                 elif direction == "W":
                     points_in_range = [(point[0], x) for x in range(0, point[1])]
-
-                if set(points_in_range) & set(pathpoints):
-                    continue
-                else:
+                intersection_p = set(points_in_range) & set(pathpoints)
+                if len(intersection_p) > 0:
                     return False
-            return True
+            else:
+                return True
+
         allpoints = [[(x, y) for y in range(len(arr[0]))] for x in range(len(arr))]
         allpoints = list(chain(*allpoints))
         pathpoints = list(map(lambda x:x[0], pathtaken))
@@ -139,8 +135,9 @@ def problemsolver(arr:list, part:int) -> int:
         res = []
         while pointpile:
             point = pointpile.popleft()
+            print_path_taken(pathtaken, point)
             #If a point has pathpoint in every direction, add it to the list
-            if pathalldir(point, pathpoints, arr):
+            if pathalldir(point, pathpoints):
                 res.append(point)
         return res
       
@@ -181,13 +178,10 @@ def problemsolver(arr:list, part:int) -> int:
     if part == 1:
         return steps // 2
     if part == 2:
-        #Call how many in the loop function
         print_path_taken(pathtaken)
-        innerblocks = chi_town_loop(pathtaken)
-        if innerblocks:
-            return sum(innerblocks)
-        else:
-            raise ValueError("Something broke~!!!")
+        nestspots = chi_town_loop(pathtaken)
+        return len(nestspots)
+
 @log_time
 def part_A():
     logger.info("Solving part 1")
@@ -216,13 +210,13 @@ def part_B():
     #Pull puzzle description and testdata
     tellstory, testdata = support.pull_puzzle(DAY, YEAR, 2)
     # console.log(f"{tellstory}")
-    # [logger.info(row) for row in testdata]
+    [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
     testcase = problemsolver(testdata, 2)
     #Assert testcase
     assert testcase == 10, "Test case failed"
     #Solve puzzle with full dataset
-    answerB = "" #problemsolver(data, 2)
+    answerB = problemsolver(data, 2)
     return answerB
 
 def main():
@@ -237,7 +231,7 @@ def main():
     #Solve part B
     resultB = part_B()
     logger.info(f"part B solution: \n{resultB}\n")
-    # support.submit_answer(DAY, YEAR, 2, resultB)
+    support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
     LOC = support.recurse_dir(f'./scripts/day{DAY}/')

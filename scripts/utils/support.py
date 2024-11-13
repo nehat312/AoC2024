@@ -264,22 +264,20 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
         logger.info(f"POST successful for {day}")
         logger.info("Determining answer")
         bs4ob = BeautifulSoup(response.text, "xml")
+        web_text = bs4ob.body.main.article.get_text()
         possiblygood = ["That's the right answer", "You don't seem to be solving the right level"]
         temp = bs4ob.find_all("p")
         for val in temp:
             if val.text.startswith(possiblygood[0]):
-                success = bs4ob.find("span", _class="day-success")
-                part2link = bs4ob.find("a").get("href")
                 logger.info("Answer Correct!")
-                logger.info(success.get_text())
-                logger.info(f"Click for part 2 {part2link}")
+                logger.info(web_text)
                 break
             elif val.text.startswith(possiblygood[1]):
                 logger.info("Answer already submitted")
                 break
-            else:
-                #TODO - Write custom error message that returns the high or low from answer on the site. 
-                logger.info("Answer incorrect or couldn't find evidence of answer")
+
+        #If we don't find success.  We warn
+        logger.warning(f"{web_text}")
 
 #TODO - Create func that can add rows and / or update a markdown table.   or store it in a dataclass.  I'd like it to be able to add new days and update it as I complete sections.  
     #Make it part of a successful submit function
