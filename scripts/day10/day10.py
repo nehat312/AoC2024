@@ -105,7 +105,6 @@ def problemsolver(arr:list, part:int) -> int:
             temparr[row] = temparr[row][:col] + direct + temparr[row][col+1:]
 
         # console.log(temparr)
-        return temparr
 
     def intersection_method(polygon, point):
         #https://medium.com/@girishajmera/exploring-algorithms-to-determine-points-inside-or-outside-a-polygon-038952946f87
@@ -130,7 +129,7 @@ def problemsolver(arr:list, part:int) -> int:
         while pointpile:
             qpoint = pointpile.popleft()
             #Print the starting block
-            temparr = print_path_taken(pathtaken, qpoint)
+            print_path_taken(pathtaken, qpoint)
             #If a point is within the polygon, add it to the location
             inbounds = intersection_method(pathpoints, qpoint)
             if inbounds:
@@ -229,7 +228,7 @@ def main():
     #Solve part B
     resultB = part_B()
     logger.info(f"part B solution: \n{resultB}\n")
-    # support.submit_answer(DAY, YEAR, 2, resultB)
+    support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
     LOC = support.recurse_dir(f'./scripts/day{DAY}/')
