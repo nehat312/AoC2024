@@ -5,6 +5,10 @@ These are my solutions for the [Advent of Code 2024](https://adventofcode.com/20
 
 ### Setup TODO 
 
+First export your cookie session with AOC with the google chrome developer tools  (Literally just go copy it)
+Then make a folder in your root titled `secret` and create a text file within called `cookie.txt`.  
+The .gitignore will ignore all text / (and other formats) so it won't get loaded into github. 
+
 - [ ] Make a function that captures the output and updates the results table in the README. SORCERY :mage: :magic_wand: 
 - [ ] Make a TUI to view and navigate the leaderboard.
     - It looks like you can request a Json payload every 15 minutes (900 seconds) for public and private leaderboards.  Could write to a JSON configs file in utils with last timestamp accessed. easier to maintain that way. Not sure cacheing would help here as we would want immediate leaderboard updates.  
