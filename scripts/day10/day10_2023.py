@@ -228,7 +228,7 @@ def main():
     #Solve part B
     resultB = part_B()
     logger.info(f"part B solution: \n{resultB}\n")
-    support.submit_answer(DAY, YEAR, 2, resultB)
+    # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
     LOC = support.recurse_dir(f'./scripts/day{DAY}/')
