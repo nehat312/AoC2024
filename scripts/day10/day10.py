@@ -35,7 +35,6 @@ DIR_DICT = {
     "E":">",
     "W":"<",
 }
-
 def problemsolver(arr:list, part:int) -> int:
     def onboard(x:int, y:int) -> bool:
         height, width  = len(arr), len(arr[0])
@@ -105,42 +104,40 @@ def problemsolver(arr:list, part:int) -> int:
             col = cp[1]
             temparr[row] = temparr[row][:col] + direct + temparr[row][col+1:]
 
-        console.log(temparr)
+        # console.log(temparr)
+        return temparr
 
-    def chi_town_loop(pathtaken):
-        length = len(arr) 
-        width = len(arr[0])
-
-        def pathalldir(point:tuple, pathpoints:list):
-            for direction in DIR_DICT.keys():
-                if direction == "N":
-                    points_in_range = [(x, point[1]) for x in range(0, point[0])]
-                elif direction == "S":
-                    points_in_range = [(x, point[1]) for x in range(point[0], length)]
-                elif direction == "E":
-                    points_in_range = [(point[0], x) for x in range(point[1], width)]
-                elif direction == "W":
-                    points_in_range = [(point[0], x) for x in range(0, point[1])]
-                intersection_p = set(points_in_range) & set(pathpoints)
-                if len(intersection_p) > 0:
-                    return False
-            else:
-                return True
-
+    def intersection_method(polygon, point):
+        #https://medium.com/@girishajmera/exploring-algorithms-to-determine-points-inside-or-outside-a-polygon-038952946f87
+        
+        inside = False
+        n = len(polygon)
+        x, y = point
+        for i in range(n):
+            x1, y1 = polygon[i]
+            x2, y2 = polygon[(i + 1) % n]
+            if (y1 > y) != (y2 > y) and x < x1 + ((y - y1) * (x2 - x1) / (y2 - y1)):
+                inside = not inside
+        return inside
+    
+    def searchparty(pathtaken:list):
         allpoints = [[(x, y) for y in range(len(arr[0]))] for x in range(len(arr))]
         allpoints = list(chain(*allpoints))
         pathpoints = list(map(lambda x:x[0], pathtaken))
         points_minus_path = set(allpoints).difference(pathpoints)
         pointpile = deque(points_minus_path)
-        res = []
+        res = set()
         while pointpile:
-            point = pointpile.popleft()
-            print_path_taken(pathtaken, point)
-            #If a point has pathpoint in every direction, add it to the list
-            if pathalldir(point, pathpoints):
-                res.append(point)
+            qpoint = pointpile.popleft()
+            #Print the starting block
+            temparr = print_path_taken(pathtaken, qpoint)
+            #If a point is within the polygon, add it to the location
+            inbounds = intersection_method(pathpoints, qpoint)
+            if inbounds:
+                res.add(qpoint)
+        #I want to return a set of the locations in the loop
         return res
-      
+    
     #Find the start position
     searchforstart = [[(row, col) for col in range(len(arr[0])) if arr[row][col] == "S"] for row in range(len(arr))]
     start = cur_pos = list(chain(*searchforstart))[0]
@@ -160,7 +157,7 @@ def problemsolver(arr:list, part:int) -> int:
                 went = dir_traveled(row, col, cur_pos)
                 #If the next point isn't a dot and its not the last point
                 if (arr[row][col] != ".") & (last_p != (row, col)):
-                    #Check if the pipe connects
+                    #Check if the pipe connects.
                     if pipe_connects(row, col, cur_pos, went):
                         last_p = cur_pos
                         cur_pos = (row, col)
@@ -178,8 +175,8 @@ def problemsolver(arr:list, part:int) -> int:
     if part == 1:
         return steps // 2
     if part == 2:
-        print_path_taken(pathtaken)
-        nestspots = chi_town_loop(pathtaken)
+        # print_path_taken(pathtaken)
+        nestspots = searchparty(pathtaken)
         return len(nestspots)
 
 @log_time
@@ -215,6 +212,7 @@ def part_B():
     testcase = problemsolver(testdata, 2)
     #Assert testcase
     assert testcase == 10, "Test case failed"
+    logger.info("Test case passed for part 2")
     #Solve puzzle with full dataset
     answerB = problemsolver(data, 2)
     return answerB
@@ -231,7 +229,7 @@ def main():
     #Solve part B
     resultB = part_B()
     logger.info(f"part B solution: \n{resultB}\n")
-    support.submit_answer(DAY, YEAR, 2, resultB)
+    # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
     LOC = support.recurse_dir(f'./scripts/day{DAY}/')
