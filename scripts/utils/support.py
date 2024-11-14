@@ -167,11 +167,12 @@ def pull_puzzle(day:int, year:int, part:int, tellstory:bool=True)-> str:
     subtext = bs4ob.find_all("article")[part - 1]
     storytime = subtext.get_text()
     
+    ###################  CHANGE THESE TO CHANGE TESTCASE TABLES retrieved ##############
     if part == 1:
-        sampledata = subtext.select("pre")[-2].text
+        sampledata = subtext.select("pre")[-1].text
     elif part == 2:
         sampledata = subtext.select("pre")[-2].text
-
+    ###########################################################################
     console.log(f"\n{storytime}")
 
     #process the sample data

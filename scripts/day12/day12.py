@@ -6,13 +6,38 @@ sys.path.append(root_folder)
 from utils.support import log_time, logger, console, _877_cache_now
 from utils import support
 from datetime import datetime
+from itertools import combinations
 
 #Set day/year global variables
-DAY:int = 1 #datetime.now().day
+DAY:int = 12 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
 
-# def problemsolver(arr:list, part:int):
-#     pass
+def problemsolver(arr:list, part:int):
+    pass
+    def find(line:str, ch:int):
+        return [x for x, ltr in enumerate(line) if ltr == ch]
+
+
+    def decode_springs(data:list, part:str):
+        '''
+        . -> operational
+        # -> broken
+        ? -> unknown
+        '''
+        counts = []
+        for springs in data:
+            line, groups = springs.split(" ")
+            groups = list(map(int, groups.split(",")))
+            
+            unknown = find(line, "?")
+            broken = find(line, "#")
+            functional = find(line, ".")
+            total_unassign_springs = sum(groups) - len(broken)
+            
+            for combo in combinations(unknown, total_unassign_springs):
+                print(combo)
+
+        return counts
 
 @log_time
 def part_A():
@@ -22,8 +47,9 @@ def part_A():
     _877_cache_now() #Lol. I blame myself
     #Pull puzzle description and testdata
     tellstory, testdata = support.pull_puzzle(DAY, YEAR, 1)
-    # console.log(f"{tellstory}")
-    # [logger.info(row) for row in testdata]
+    console.log(f"{tellstory}")
+    console.log(f"Sample data:\n")
+    [console.log(row) for row in testdata]
     #Solve puzzle w/testcase
     testcase = "" #problemsolver(testdata, 1)
     #Assert testcase
@@ -59,8 +85,8 @@ def main():
     # support.submit_answer(DAY, YEAR, 1, resultA)
 
     #Solve part B
-    resultB = part_B()
-    logger.info(f"part B solution: \n{resultB}\n")
+    # resultB = part_B()
+    # logger.info(f"part B solution: \n{resultB}\n")
     # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
