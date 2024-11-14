@@ -7,7 +7,7 @@ These are my solutions for the [Advent of Code 2024](https://adventofcode.com/20
 
 First export your cookie session with AOC with the google chrome developer tools  (Literally just go copy it)
 Then make a folder in your root titled `secret` and create a text file within called `cookie.txt`.  
-The .gitignore will ignore all text / (and other formats) so it won't get loaded into github. 
+The .gitignore will ignore all text files / (and other formats) so it won't get loaded into github. 
 
 - [ ] Make a function that captures the output and updates the results table in the README. SORCERY :mage: :magic_wand: 
 - [ ] Make a TUI to view and navigate the leaderboard.
