@@ -129,7 +129,7 @@ def problemsolver(arr:list, part:int) -> int:
         while pointpile:
             qpoint = pointpile.popleft()
             #Print the starting block
-            print_path_taken(pathtaken, qpoint)
+            # print_path_taken(pathtaken, qpoint)
             #If a point is within the polygon, add it to the location
             inbounds = intersection_method(pathpoints, qpoint)
             if inbounds:

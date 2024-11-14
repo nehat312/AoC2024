@@ -170,7 +170,7 @@ def pull_puzzle(day:int, year:int, part:int, tellstory:bool=True)-> str:
     if part == 1:
         sampledata = subtext.select("pre")[-2].text
     elif part == 2:
-        sampledata = subtext.select("pre")[-3].text
+        sampledata = subtext.select("pre")[-2].text
 
     console.log(f"\n{storytime}")
 
@@ -261,7 +261,7 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
         logger.warning(f'Reason: {response.text}')
         return
     else:
-        logger.info(f"POST successful for {day}")
+        logger.info(f"POST successful for day {day} of {year}")
         logger.info("Determining answer")
         bs4ob = BeautifulSoup(response.text, "xml")
         web_text = bs4ob.body.main.article.get_text()
@@ -270,7 +270,6 @@ def submit_answer(day:int, year:int, part:int, answer:Any=""):
         for val in temp:
             if val.text.startswith(possiblygood[0]):
                 logger.info("Answer Correct!")
-                logger.info(web_text)
                 break
             elif val.text.startswith(possiblygood[1]):
                 logger.info("Answer already submitted")
