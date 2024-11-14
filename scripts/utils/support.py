@@ -214,6 +214,7 @@ def process_input(textdata:str, testd:bool, split:bool=True)->list:
 
     Args:
         textdata (str): Usually one huge string of the input data
+        testd: (bool): Whether not its test data.  If it is, it will print it to the console
         split (bool, optional): Whether or not you want to newline split the string. Defaults to True.
 
     Returns:
