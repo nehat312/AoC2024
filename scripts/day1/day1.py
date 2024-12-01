@@ -13,13 +13,13 @@ DAY:int = datetime.now().day
 YEAR:int = datetime.now().year
 
 def problemsolver(arr:list, part:int):
-    #Transform input strings to two lists
     left, right, diffs = [], [], []
+    #Transform input strings to two lists
     for row in arr:
         l, r = row.split()
         left.append(int(l))
         right.append(int(r))
-        
+
     #Sort the lists
     left = sorted(left)
     right = sorted(right)
@@ -30,9 +30,9 @@ def problemsolver(arr:list, part:int):
             diffs.append(abs(l - r))
     
     if part == 2:
+        res = Counter(right)
         for val in left:
             if val in right:
-                res = Counter(right)
                 diffs.append(val * res[val])
 
     return sum(diffs)
@@ -84,7 +84,7 @@ def main():
     #Solve part B
     resultB = part_B()
     logger.info(f"part B solution: \n{resultB}\n")
-    support.submit_answer(DAY, YEAR, 2, resultB)
+    # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
     LOC = support.recurse_dir(f'./scripts/day{DAY}/')
@@ -113,3 +113,10 @@ if __name__ == "__main__":
 # 1. We'll first sort each list from smallest to largest
 # 2. for each pair, what is their difference. 
 # 3. Add up the list of differences.  Easy peasy
+
+#Part B
+#For each value in the left list, if it exists in the right list, 
+#Add the value multipled by its number of occurances to the diffs. 
+#sum the diffs
+
+#Fun start! 
