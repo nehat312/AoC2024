@@ -9,8 +9,8 @@ from datetime import datetime
 from collections import Counter
 
 #Set day/year global variables
-DAY:int = datetime.now().day
-YEAR:int = datetime.now().year
+DAY:int = 1 #datetime.now().day
+YEAR:int = 2024 #datetime.now().year
 
 def problemsolver(arr:list, part:int):
     left, right, diffs = [], [], []
