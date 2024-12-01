@@ -7,18 +7,33 @@ from utils.support import log_time, logger, console, _877_cache_now
 from utils import support
 from datetime import datetime
 from itertools import combinations
+from functools import cache as cashish
 
 #Set day/year global variables
 DAY:int = 12 #datetime.now().day
 YEAR:int = 2023 #datetime.now().year
 
 def problemsolver(arr:list, part:int):
-    pass
     def find(line:str, ch:int):
         return [x for x, ltr in enumerate(line) if ltr == ch]
 
+    def is_valid(group:list):
+        for x in range(len(group)):
+            if group[x] + 1 == group[x + 1]:
+                pass
+    
+    @cashish
+    def possible_combos(line:str, groups:tuple):
+        possibles = []
+        groups = tuple(map(int, groups.split(",")))
+        unknown = find(line, "?")
+        broken = find(line, "#")
+        functional = find(line, ".")
+        for combo in combinations(unknown, broken):
+            logger.info(combo)
 
-    def decode_springs(data:list, part:str):
+
+    def decode_springs(data:list):
         '''
         . -> operational
         # -> broken
@@ -27,17 +42,14 @@ def problemsolver(arr:list, part:int):
         counts = []
         for springs in data:
             line, groups = springs.split(" ")
-            groups = list(map(int, groups.split(",")))
-            
-            unknown = find(line, "?")
-            broken = find(line, "#")
-            functional = find(line, ".")
-            total_unassign_springs = sum(groups) - len(broken)
-            
-            for combo in combinations(unknown, total_unassign_springs):
-                print(combo)
+            counts += possible_combos(line, groups)
 
         return counts
+    
+    arrangements = decode_springs(arr)
+
+    if part == 1:
+        return sum(arrangements)
 
 @log_time
 def part_A():
@@ -48,12 +60,12 @@ def part_A():
     #Pull puzzle description and testdata
     tellstory, testdata = support.pull_puzzle(DAY, YEAR, 1)
     console.log(f"{tellstory}")
-    console.log(f"Sample data:\n")
-    [console.log(row) for row in testdata]
+    # console.log(f"Sample data:\n")
+    # [console.log(row) for row in testdata]
     #Solve puzzle w/testcase
-    testcase = "" #problemsolver(testdata, 1)
+    testcase = ""#problemsolver(testdata, 1)
     #Assert testcase
-    assert testcase == "", "Test case A failed"
+    assert testcase == 21, "Test case A failed"
     #Solve puzzle with full dataset
     answerA = "" #problemsolver(data, 1)
     return answerA
@@ -102,3 +114,15 @@ if __name__ == "__main__":
 ########################################################
 #Notes
 #Part A Notes
+
+#ooook so we've got rows of springs.  
+
+# . = operational
+# # = Damaged
+# ? = Unknown
+# our map is partially obscured so we don't know the groups are. But we have a list of the 
+            # size of contiguous groups of springs that are damaged
+            #in order
+# Our task:
+# We need to count how many different arrangements are possible for each row of data and sum those up.
+# We have

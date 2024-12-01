@@ -8,8 +8,8 @@ from utils import support
 from datetime import datetime
 
 #Set day/year global variables
-DAY:int = 1 #datetime.now().day
-YEAR:int = 2023 #datetime.now().year
+DAY:int = datetime.now().day
+YEAR:int = datetime.now().year
 
 # def problemsolver(arr:list, part:int):
 #     pass
@@ -59,8 +59,8 @@ def main():
     # support.submit_answer(DAY, YEAR, 1, resultA)
 
     #Solve part B
-    resultB = part_B()
-    logger.info(f"part B solution: \n{resultB}\n")
+    # resultB = part_B()
+    # logger.info(f"part B solution: \n{resultB}\n")
     # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code

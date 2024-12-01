@@ -177,7 +177,7 @@ def problemsolver(arr:list, part:int) -> int:
         # print_path_taken(pathtaken)
         nestspots = searchparty(pathtaken)
         return len(nestspots)
-
+    
 @log_time
 def part_A():
     logger.info("Solving part 1")
@@ -235,7 +235,7 @@ def main():
     logger.info(f"Lines of code \n{LOC}")
 
     #Delete the cache after submission
-    _877_cache_now(".cache", False)
+    _877_cache_now(".cache", True)
     
 if __name__ == "__main__":
     main()
