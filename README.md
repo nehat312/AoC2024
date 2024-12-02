@@ -19,4 +19,4 @@ The .gitignore will ignore all text files / (and other formats) so it won't get 
 | Day | Stars | Solution | Name | Speed Part A | Speed Part B | LOC |
 | :--- | :----- | :---- | :---------------------------------------------------------------- | ----- | ----- | --- |
 | 01  | ⭐⭐ | [Day1](https://github.com/Landcruiser87/AoC2024/blob/main/scripts/day1/day1.py) |[Historian Hysteria](https://adventofcode.com/2024/day/1) | 25 ms | 35 ms | 57 |
-
+| 02  |  | [Day2](https://github.com/Landcruiser87/AoC2024/blob/main/scripts/day2/day2.py) |[Red-Nosed Reports](https://adventofcode.com/2024/day/2) | ? ms | ? ms | ? |
