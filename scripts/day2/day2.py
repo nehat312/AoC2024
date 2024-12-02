@@ -12,11 +12,15 @@ import numpy as np
 DAY:int = datetime.now().day
 YEAR:int = datetime.now().year
 
-def check_requirements(row:list) -> bool:
+def check_requirements(row:list, part:int) -> bool:
     diffs = np.diff(row)
     test1 = np.all(diffs > 0) | np.all(diffs < 0)
     difftest = np.where((abs(diffs) < 1) | abs(diffs) > 3)[0]
-    test2 = difftest.size == 0
+    if part == 1:
+        test2 = difftest.size == 0
+    elif part == 2:
+        test2 = difftest.size <= 1
+
     if test1 & test2:
         return True
     else:
@@ -26,12 +30,9 @@ def problemsolver(arr:list, part:int) -> int:
     safezone = 0
     for row in arr:
         row = [int(x) for x in row.split()]
-        if check_requirements(row):
+        if check_requirements(row, part):
             safezone += 1
-    if part == 1:
-        return safezone
-    if part == 2:
-        pass
+    return safezone
 
 @log_time
 def part_A():
@@ -61,11 +62,11 @@ def part_B():
     # console.log(f"{tellstory}")
     # [logger.info(row) for row in testdata]
     #Solve puzzle w/testcase
-    testcase = "" #problemsolver(testdata, 2)
+    testcase = problemsolver(testdata, 2)
     #Assert testcase
-    assert testcase == "", "Test case B failed"
+    assert testcase == 4, "Test case B failed"
     #Solve puzzle with full dataset
-    answerB = "" #problemsolver(data, 2)
+    answerB = problemsolver(data, 2)
     return answerB
 
 def main():
@@ -75,11 +76,11 @@ def main():
     #Solve part A
     resultA = part_A()
     logger.info(f"part A solution: \n{resultA}\n")
-    support.submit_answer(DAY, YEAR, 1, resultA)
+    # support.submit_answer(DAY, YEAR, 1, resultA)
 
     #Solve part B
-    # resultB = part_B()
-    # logger.info(f"part B solution: \n{resultB}\n")
+    resultB = part_B()
+    logger.info(f"part B solution: \n{resultB}\n")
     # support.submit_answer(DAY, YEAR, 2, resultB)
 
     #Recurse lines of code
@@ -106,3 +107,7 @@ if __name__ == "__main__":
 # **If all levels are increasing or decreasing** Check Monotocity
 # **Any two levels differ by at least one and at most 3**
 # We need to report how many of these levels are safe.  
+
+#Part B Notes
+#Now we can allow one bad case to get through on the second test. 
+#Should be a simple adjustment
