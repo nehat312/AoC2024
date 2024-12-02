@@ -8,8 +8,8 @@ from utils import support
 from datetime import datetime
 
 #Set day/year global variables
-DAY:int = 1 #datetime.now().day
-YEAR:int = 2023 #datetime.now().year
+DAY:int = datetime.now().day
+YEAR:int = datetime.now().year
 
 # def problemsolver(arr:list, part:int):
 #     pass
