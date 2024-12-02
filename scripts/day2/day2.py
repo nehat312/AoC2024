@@ -12,20 +12,44 @@ import numpy as np
 DAY:int = datetime.now().day
 YEAR:int = datetime.now().year
 
-def check_requirements(row:list, part:int) -> bool:
+def test_one(row)->bool:
     diffs = np.diff(row)
     test1 = np.all(diffs > 0) | np.all(diffs < 0)
+    return test1, diffs
+
+def test_two(diffs)->bool:
     difftest = np.where((abs(diffs) < 1) | abs(diffs) > 3)[0]
+    return difftest
+
+def check_requirements(row:list, part:int) -> bool:
     if part == 1:
+        test1, diffs = test_one(row)
+        difftest = test_two(diffs)
         test2 = difftest.size == 0
+
     elif part == 2:
-        test2 = difftest.size <= 1
+        #Now we can allow one bad level.  
+        #how the f do i trap that.
+        #1.Could go by difftest size to see how many bad levels there were
+        #2.Pop each level in a row and see if it still passes BOTH tests.  Meaning I need to functionalize the two tests
+        badcount = 0
+        for idx in range(len(row)):
+            temprow = row.copy()
+            temprow.pop(idx)
+            test1, diffs = test_one(temprow)
+            difftest = test_two(diffs)
+            if difftest.size >= 1:
+                badcount += 1
+            if badcount > 1:
+                return False
+        
+        return True 
 
     if test1 & test2:
         return True
     else:
         return False
-    
+
 def problemsolver(arr:list, part:int) -> int:
     safezone = 0
     for row in arr:
