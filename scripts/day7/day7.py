@@ -14,12 +14,8 @@ DAY:int = datetime.now().day
 YEAR:int = datetime.now().year
 
 ########################################################
-## ATTEMPT 
+## Day7 Attempt(s)... 
 def possible_target_form(target, nums):
-    """
-    Determine if it's possible to form `target` by inserting '+' or '*'
-    between the given numbers, evaluated strictly left to right.
-    """
     if len(nums) == 1:
         return nums[0] == target
 

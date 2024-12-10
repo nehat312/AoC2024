@@ -5,7 +5,7 @@ import sys
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)
 #from utils.support import log_time, _877_cache_now, logger, console
-from utils import support
+#from utils import support
 from datetime import datetime
 import numpy as np
 
@@ -18,7 +18,7 @@ YEAR:int = datetime.now().year
 from collections import defaultdict
 from itertools import combinations
 
-# Parse the puzzle input into a grid
+# Parse puzzle input into grid
 def parse_input(input_data):
     grid = [list(line) for line in input_data.strip().split('\n')]
     return np.array(grid)
@@ -54,17 +54,16 @@ def calculate_antinodes(pair):
             antinodes.add(midpoint)
     return antinodes
 
-# Main function to compute unique antinodes
+# Function to compute unique antinodes
 def count_unique_antinodes(grid):
     antennas = find_antennas(grid)
     unique_antinodes = set()
     
-    # For each frequency, calculate antinodes
     for frequency, positions in antennas.items():
         for pair in combinations(positions, 2):  # All pairs of antennas
             unique_antinodes.update(calculate_antinodes(pair))
     
-    # Filter antinodes within grid bounds and include antenna positions
+    # Filter antinodes within grid bounds; include antenna positions
     rows, cols = grid.shape
     valid_antinodes = {pos for pos in unique_antinodes if 0 <= pos[0] < rows and 0 <= pos[1] < cols}
     antenna_positions = set(pos for positions in antennas.values() for pos in positions)
@@ -147,25 +146,23 @@ result
 # import numpy as np
 # from collections import defaultdict
 
-# # Parse the puzzle input into a grid
 # def parse_input(input_data):
 #     grid = [list(line) for line in input_data.strip().split('\n')]
 #     return np.array(grid)
 
-# # Find antenna positions grouped by frequency
 # def find_antennas(grid):
 #     antennas = defaultdict(list)
 #     for r in range(grid.shape[0]):
 #         for c in range(grid.shape[1]):
 #             char = grid[r, c]
-#             if char.isalnum():  # Consider only antennas (letters or digits)
+#             if char.isalnum():  # Consider only letters or digits
 #                 antennas[char].append((r, c))
 #     return antennas
 
-# # Calculate antinodes for a pair of antennas
+
 # def calculate_antinodes(pair):
 #     (r1, c1), (r2, c2) = pair
-#     if (r1 == r2 or c1 == c2):  # Check if perfectly aligned
+#     if (r1 == r2 or c1 == c2):  # Check if aligned
 #         dr, dc = r2 - r1, c2 - c1
 #         midpoint_r, midpoint_c = r1 + dr // 2, c1 + dc // 2
 #         if abs(dr) % 2 == 0 and abs(dc) % 2 == 0:  # Ensure midpoint is integer
@@ -174,7 +171,7 @@ result
 #             return [antinode1, (midpoint_r, midpoint_c)], [antinode2]  # Return midpoint as tuple
 #     return []
 
-# # Main function to compute unique antinodes
+# # Function to compute unique antinodes
 # def count_unique_antinodes(grid):
 #     antennas = find_antennas(grid)
 #     antinodes = set()
