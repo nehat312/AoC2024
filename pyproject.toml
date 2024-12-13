@@ -17,6 +17,9 @@ lxml = "^5.3.0"
 percache = "^0.4.4"
 
 
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
